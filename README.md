@@ -21,3 +21,17 @@
 `Register (สมัครสมาชิก) → รับคำสั่งผ่าน Inbound (Telegram) → เขียน Log (JSONL)`
 
 ดู `sandbox/README.md`
+
+## Skill แจกฟรี: `organ-kit`
+
+แม่แบบ + กฎทั้งหมดถูกแพ็กเป็น Claude Code Skill ที่เป็นกลาง ใช้ได้ทุกโปรเจค
+อยู่ที่ `.claude/skills/organ-kit/` — ก็อปโฟลเดอร์นี้ไปวางใน `.claude/skills/` ของ repo ไหนก็ได้
+
+สร้างอวัยวะใหม่ (รันได้โดยไม่ต้องมี AI):
+
+```bash
+python .claude/skills/organ-kit/scripts/new_organ.py <organ_name> --title "ชื่อ"
+```
+
+ได้อวัยวะที่ **รันได้ + ผ่านเทสทันที** พร้อมกฎ ask-before-create, log JSONL, และ
+graphify ในตัว ดูรายละเอียดที่ `.claude/skills/organ-kit/SKILL.md`

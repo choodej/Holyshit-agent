@@ -1,0 +1,17 @@
+{
+  "organ": "{{ORGAN}}",
+  "title": "{{TITLE}}",
+  "version": "0.1.0",
+  "language": "python",
+  "status": "scaffolded",
+  "purpose": "TODO: describe what this organ does",
+  "ports": ["Repository", "Logger", "Inbound"],
+  "adapters": {
+    "Repository": ["jsonl_repository"],
+    "Logger": ["jsonl_logger"],
+    "Inbound": ["demo_inbound"]
+  },
+  "exposes": ["submit(label, source) -> Result[Item]"],
+  "depends_on": [],
+  "owns_data": ["{{ORGAN}}.jsonl", "{{ORGAN}}.log.jsonl"]
+}
