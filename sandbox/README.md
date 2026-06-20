@@ -1,0 +1,35 @@
+# sandbox
+
+ที่เขียน/ทดลอง/พิสูจน์อวัยวะ ก่อนส่งเข้า `project/`
+
+## โครงสร้าง (แม่แบบของทุกอวัยวะ)
+
+```
+sandbox/
+  shared/                 # contract กลางที่ทุกอวัยวะใช้ร่วม
+    result.py             # Result/Outcome — ปลอดภัย ไม่ throw มั่ว, รองรับ "ถามก่อนสร้าง"
+    ids.py                # สร้าง id + ตรวจซ้ำ
+    ports.py              # base Port (ABC)
+  organs/
+    registry/             # อวัยวะที่ 1 — สมัครสมาชิก
+      domain/             # OOP core บริสุทธิ์ (ไม่รู้จัก telegram/db)
+      ports/              # interface (ABC) ที่ domain ต้องการ
+      adapters/           # ของจริง: jsonl, telegram, clickup
+      tests/              # เทสว่าทำงานจริง
+      app.py              # composition root — ต่อสายทุกชิ้นแล้วรัน slice
+      manifest.json       # ข้อมูลอวัยวะ (graphify อ่านอันนี้)
+  tools/
+    build_graph.py        # generate สารบัญ (CATALOG.md + graph.json) อัตโนมัติ
+```
+
+## รัน
+
+```bash
+cd sandbox
+python -m pip install -r requirements.txt      # pytest (+ python-telegram-bot ถ้าจะต่อจริง)
+python -m pytest organs/registry/tests -q      # พิสูจน์อวัยวะทำงานจริง
+python organs/registry/app.py --demo           # รัน slice แบบ demo (ไม่ต้องมี token)
+python tools/build_graph.py                     # สร้างสารบัญอัตโนมัติ
+```
+
+ต่อ Telegram จริง: ตั้ง `TELEGRAM_BOT_TOKEN` แล้ว `python organs/registry/app.py --telegram`

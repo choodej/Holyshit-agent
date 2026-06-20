@@ -1,0 +1,17 @@
+{
+  "organ": "registry",
+  "title": "สมัครสมาชิก (Registration)",
+  "version": "0.1.0",
+  "language": "python",
+  "status": "slice-proven",
+  "purpose": "รับคำสั่งสมัครสมาชิกผ่านช่องทางใดก็ได้ ตรวจซ้ำ แล้วบันทึก + log",
+  "ports": ["MemberRepository", "Logger", "Inbound"],
+  "adapters": {
+    "MemberRepository": ["jsonl_member_repo"],
+    "Logger": ["jsonl_logger", "clickup_logger"],
+    "Inbound": ["telegram_inbound", "demo_inbound"]
+  },
+  "exposes": ["register(username, source) -> Result[Member]"],
+  "depends_on": [],
+  "owns_data": ["members.jsonl", "registry.log.jsonl"]
+}

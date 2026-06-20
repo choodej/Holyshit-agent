@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {
+      "id": "registry",
+      "title": "สมัครสมาชิก (Registration)",
+      "status": "slice-proven",
+      "path": "organs/registry"
+    }
+  ],
+  "edges": []
+}

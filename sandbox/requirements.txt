@@ -1,0 +1,5 @@
+# core slice ไม่ต้องพึ่ง lib ภายนอกเลย (เทสได้ด้วย stdlib)
+pytest>=8.0
+
+# ติดตั้งเฉพาะเมื่อจะต่อ Telegram จริง:
+# python-telegram-bot>=21.0
