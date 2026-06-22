@@ -75,6 +75,7 @@ It will:
 - ensure `manifest.schema.json` exists at the sandbox root,
 - ensure `shared/` and `tools/` exist (created once, never overwritten),
 - stamp out a self-contained organ: `domain/ ports/ adapters/ tests/ app.py manifest.json`,
+- include `CHECKLIST.md` so skeleton-first is an artifact, not prose only,
 - leave you an organ that **already runs and passes its smoke test**.
 
 Then:
@@ -103,7 +104,9 @@ python3 tools/graphify.py                          # refresh CATALOG.md / graph.
 ## Manifest contract
 Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
 `graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
-`safety_gate` for shadow detection, so those fields must be declared honestly.
+`safety_gate` for shadow detection, and reports `phase` as the organ's
+skeleton-first progress marker. Keep each organ's `CHECKLIST.md` and
+`manifest.json` phase in sync.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).

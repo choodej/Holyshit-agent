@@ -106,6 +106,10 @@ before its port + a failing test exist is the one hard "no".
 ("Models" is intentionally not a numbered step: domain models are bone and live
 in step 1/4; serving an ML model is tissue and lives in step 5+.)
 
+Each organ tracks this order in two places:
+- `CHECKLIST.md` — the human checklist to follow while building
+- `manifest.json.phase` — the machine-readable phase that graphify reports
+
 ## What this kit deliberately does NOT do
 - No mandatory message broker, no mandatory DB, no mandatory cloud. Start with
   files; add infrastructure only when an organ proves it needs it.

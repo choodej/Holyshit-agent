@@ -8,6 +8,7 @@
     "title",
     "version",
     "language",
+    "phase",
     "status",
     "purpose",
     "ports",
@@ -41,10 +42,24 @@
       "minLength": 1,
       "description": "Primary implementation language."
     },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "skeleton",
+        "contracts",
+        "harness-proof",
+        "domain-logic",
+        "adapters",
+        "workflow",
+        "optimization",
+        "slice-proven"
+      ],
+      "description": "Current skeleton-first phase. graphify reports this field."
+    },
     "status": {
       "type": "string",
       "minLength": 1,
-      "description": "Lifecycle status, for example scaffolded or slice-proven."
+      "description": "Free-form lifecycle note. Use phase for graph/reporting."
     },
     "purpose": {
       "type": "string",

@@ -27,6 +27,8 @@ projects with a small, testable first slice before adding architecture.
   other's internals.
 - Use `.claude/skills/organ-kit/scripts/new_organ.py` to scaffold a new organ.
   Do not hand-write the scaffold.
+- Keep `organs/<organ>/CHECKLIST.md` synced with `manifest.json.phase`.
+  `status` can be a note, but `phase` is the graph/reporting field.
 - External writes must go through `sandbox/shared/safety.py`.
 - Keep raw logs local as JSONL. External tools get summaries through adapters.
 - Use `sandbox/tools/token_compressor.py` only for next-agent context/state

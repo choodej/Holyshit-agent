@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 SANDBOX = Path(__file__).resolve().parents[1]
@@ -106,9 +107,14 @@ def detect_shadows(manifests: list[dict]) -> list[str]:
 # --------------------------------------------------------------------------- #
 # render
 # --------------------------------------------------------------------------- #
+def manifest_phase(manifest: dict) -> str:
+    return manifest.get("phase") or manifest.get("status", "?")
+
+
 def build_graph(manifests: list[dict]) -> dict:
     nodes = [{"id": m["organ"], "title": m.get("title", ""),
-              "status": m.get("status", ""), "path": m.get("_path", "")}
+              "phase": manifest_phase(m), "status": m.get("status", ""),
+              "path": m.get("_path", "")}
              for m in manifests]
     edges = [{"from": m["organ"], "to": dep}
              for m in manifests for dep in m.get("depends_on", [])]
@@ -119,7 +125,7 @@ def render_mermaid(manifests: list[dict]) -> str:
     lines = ["graph TD"]
     for m in manifests:
         organ = m["organ"]
-        lines.append(f'  {organ}["{organ}\\n({m.get("status", "?")})"]')
+        lines.append(f'  {organ}["{organ}\\n({manifest_phase(m)})"]')
         for port, adapters in (m.get("adapters") or {}).items():
             for ad in adapters:
                 node = f"{organ}__{ad}"
@@ -134,6 +140,12 @@ def render_mermaid(manifests: list[dict]) -> str:
 def render_catalog(manifests: list[dict], warnings: list[str]) -> str:
     lines = ["# CATALOG — system index (auto-generated, do not edit by hand)", ""]
     lines.append(f"Organs: {len(manifests)}")
+    phase_counts = Counter(manifest_phase(m) for m in manifests)
+    if phase_counts:
+        lines.append("")
+        lines.append("## Phases")
+        for phase, count in sorted(phase_counts.items()):
+            lines.append(f"- `{phase}`: {count}")
     if warnings:
         lines.append("")
         lines.append("## ⚠ Shadow warnings")
@@ -142,7 +154,10 @@ def render_catalog(manifests: list[dict], warnings: list[str]) -> str:
     lines.append("")
     for m in manifests:
         lines.append(f"## {m['organ']} — {m.get('title', '')}")
-        lines.append(f"- status: `{m.get('status', '?')}` | version: `{m.get('version', '?')}`")
+        lines.append(
+            f"- phase: `{manifest_phase(m)}` | status: `{m.get('status', '?')}` "
+            f"| version: `{m.get('version', '?')}`"
+        )
         lines.append(f"- path: `{m.get('_path', '')}`")
         lines.append(f"- purpose: {m.get('purpose', '')}")
         lines.append(f"- ports: {', '.join(m.get('ports', [])) or '-'}")

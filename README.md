@@ -72,6 +72,7 @@ python tools/graphify.py --strict
 | `sandbox/manifest.schema.json` | schema ของ `manifest.json`; ระบุ field ที่ graphify ใช้จับ shadow |
 | `sandbox/tools/graphify.py` | สารบัญ + Mermaid + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
 | `sandbox/tools/token_compressor.py` | ย่อ state สำหรับส่งต่อ agent ถัดไป — ใช้กับ context เท่านั้น ไม่แตะ audit log |
+| `sandbox/organs/*/CHECKLIST.md` | checklist ของ skeleton-first; sync กับ `manifest.json.phase` |
 
 ## เส้นแรกที่พิสูจน์แล้ว (vertical slice)
 

@@ -3,6 +3,7 @@
     {
       "id": "registry",
       "title": "สมัครสมาชิก (Registration)",
+      "phase": "slice-proven",
       "status": "slice-proven",
       "path": "organs/registry"
     }

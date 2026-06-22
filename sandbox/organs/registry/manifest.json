@@ -4,6 +4,7 @@
   "title": "สมัครสมาชิก (Registration)",
   "version": "0.1.0",
   "language": "python",
+  "phase": "slice-proven",
   "status": "slice-proven",
   "purpose": "รับคำสั่งสมัครสมาชิกผ่านช่องทางใดก็ได้ ตรวจซ้ำ แล้วบันทึก + log",
   "ports": ["MemberRepository", "Logger", "Inbound"],

@@ -8,6 +8,8 @@ from tools.graphify import (
     detect_data_overlap,
     detect_shadows,
     detect_unguarded_writes,
+    manifest_phase,
+    render_catalog,
     render_mermaid,
 )
 
@@ -61,11 +63,28 @@ def test_clean_system_has_no_shadows():
 
 def test_graph_and_mermaid_render():
     manifests = [{
-        "organ": "a", "status": "ok", "depends_on": ["b"],
+        "organ": "a", "phase": "contracts", "status": "ok", "depends_on": ["b"],
         "adapters": {"Logger": ["jsonl_logger"]},
     }, {"organ": "b"}]
     g = build_graph(manifests)
     assert {"from": "a", "to": "b"} in g["edges"]
+    assert g["nodes"][0]["phase"] == "contracts"
     mmd = render_mermaid(manifests)
     assert "graph TD" in mmd
+    assert "contracts" in mmd
     assert "jsonl_logger" in mmd
+
+
+def test_catalog_reports_phase_counts():
+    manifests = [
+        {"organ": "a", "phase": "contracts", "depends_on": []},
+        {"organ": "b", "phase": "slice-proven", "depends_on": []},
+    ]
+    catalog = render_catalog(manifests, [])
+    assert "## Phases" in catalog
+    assert "`contracts`: 1" in catalog
+    assert "`slice-proven`: 1" in catalog
+
+
+def test_manifest_phase_falls_back_to_status_for_old_manifests():
+    assert manifest_phase({"status": "legacy"}) == "legacy"

@@ -4,6 +4,7 @@
   "title": "{{TITLE}}",
   "version": "0.1.0",
   "language": "python",
+  "phase": "harness-proof",
   "status": "scaffolded",
   "purpose": "TODO: describe what this organ does",
   "ports": ["Repository", "Logger", "Inbound"],
