@@ -11,6 +11,34 @@
 - สร้าง module/service/department แบบมี test และ safety gate ตั้งแต่แรก
 - ให้ AI assistant ทำงานแบบถามเมื่อไม่ชัด เสนอทางเลือกเมื่อมีหลายทาง และแก้แบบ surgical
 
+## Quickstart 60 วินาที
+
+```bash
+git clone https://github.com/choodej/ohlyshit.git
+cd ohlyshit
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r sandbox/requirements.txt
+cd sandbox
+python -m pytest -q
+python organs/registry/app.py --demo
+python tools/graphify.py --strict
+```
+
+ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, demo slice รันได้, และ graph ไม่มี shadow.
+
+ถ้าจะสร้าง organ แรกของตัวเอง:
+
+```bash
+cd ..
+python3 .claude/skills/organ-kit/scripts/new_organ.py first_task --title "First task"
+cd sandbox
+python -m pytest organs/first_task/tests -q
+python tools/graphify.py --strict
+```
+
+ใช้กับ Claude Code: เปิด repo นี้แล้ว `CLAUDE.md` จะบอกกฎ project ให้ Claude โหลดอัตโนมัติ.
+
 **Core features (frozen):**
 - 🧩 **Hexagonal OOP** — domain บริสุทธิ์ คุยโลกภายนอกผ่าน ports/adapters เท่านั้น
 - 🗺️ **Graphify auto-mapping** — สร้างสารบัญ + Mermaid + ตรวจ "เงา" (วน/ทับ/ขาด) อัตโนมัติ
