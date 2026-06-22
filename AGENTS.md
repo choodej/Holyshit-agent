@@ -67,6 +67,10 @@ python tools/check.py
 This one gate runs tests, doc lint, manifest validation, strict graphify, and
 generated graph drift detection.
 
+Before sending the result, review the final diff against the user's confirmed
+brief, fix anything incomplete, rerun the gate, and report blockers instead of
+calling unfinished work done.
+
 ## Work Mode Check
 
 Before editing, identify the mode:

@@ -157,6 +157,15 @@ Every organ keeps a local `DEFERRED.md` beside `CHECKLIST.md`. Use it only for
 work intentionally delayed because it belongs to a later phase or needs a real
 trigger. Do not use it as a general wishlist.
 
+Before reporting success, do one final review loop:
+- compare the final diff against the user's original request and confirmed brief,
+- check for unintended files, scope creep, duplicate rules, and manual graph edits,
+- run the proof gate (`python tools/check.py`) and fix anything it catches,
+- if anything remains incomplete, say so plainly instead of calling it done.
+
+Do not send the final result as "complete" until this review is clean or the
+remaining blocker is explicitly reported.
+
 ## 10. Human Decision Gate
 **Why:** code guards catch drift after work starts, but the most expensive drift
 happens before coding: the agent chooses the wrong goal, wrong feature, wrong

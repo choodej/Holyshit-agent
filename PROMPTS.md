@@ -17,7 +17,7 @@ coding agent.
 2. ใช้ "Prompt ชุดใหญ่" ถ้าคุณอยากให้ AI คุมงานทั้งรอบ.
 3. ใช้ prompt ย่อยเมื่องานแคบลง เช่น สร้าง organ, ใส่ domain logic, เพิ่ม adapter.
 4. ถ้าเจอ decision ใหญ่ ให้ใช้ prompt Decision Gate ก่อนปล่อย AI ทำต่อ.
-5. ก่อนบอกว่างานเสร็จ ต้องผ่าน:
+5. ก่อนบอกว่างานเสร็จ ต้อง review ผลงานกับ brief ที่ยืนยันแล้ว และต้องผ่าน:
 
 ```bash
 cd sandbox
@@ -69,7 +69,8 @@ python tools/check.py
 8. ก่อนบอกว่าสำเร็จ ให้รัน:
    cd sandbox
    python tools/check.py
-9. รายงานผลตามจริง พร้อมบอกว่าขาดอะไรถ้ายังไม่ implementation-done
+9. review diff/ไฟล์ที่แก้เทียบกับ brief ที่ผม confirm แล้ว ถ้ามีอะไรยังไม่ครบให้แก้ก่อน
+10. รายงานผลตามจริง พร้อมบอกว่าขาดอะไรถ้ายังไม่ implementation-done
 ```
 
 ## Prompt ชุดใหญ่
@@ -107,7 +108,8 @@ python tools/check.py
 6. ก่อนบอกว่าสำเร็จ ให้รัน:
    cd sandbox
    python tools/check.py
-7. รายงานผลตามจริง: ผ่านอะไร, fail อะไร, แก้ไฟล์ไหน, ยังเหลือ risk อะไร
+7. review diff/ไฟล์ที่แก้เทียบกับ brief ที่ยืนยันแล้ว ถ้ามีอะไรยังไม่ครบหรือเกิน scope ให้แก้ก่อน
+8. รายงานผลตามจริง: ผ่านอะไร, fail อะไร, แก้ไฟล์ไหน, ยังเหลือ risk อะไร
 
 ห้าม:
 - เดาเป้าหมายแทนเจ้าของงาน
@@ -131,6 +133,23 @@ python tools/check.py
 - คำสั่ง proof gate คืออะไร
 
 อย่าเพิ่งแก้โค้ด แค่อธิบาย
+```
+
+## Final Review Before Delivery
+
+```text
+ก่อนส่งผลงานจริง ช่วย review รอบสุดท้าย:
+
+1. เทียบผลลัพธ์กับ brief/ตัวเลือกที่ผม confirm ไว้
+2. ตรวจว่าแก้เฉพาะ scope ที่ตกลงกัน ไม่มีไฟล์หรือกฎใหม่ที่ไม่เกี่ยว
+3. ตรวจว่าไม่มี graph artifact ที่แก้มือ
+4. ตรวจว่าไม่มี TODO/deferred ที่ต้องปิดก่อนบอกว่า implementation-done
+5. รัน:
+   cd sandbox
+   python tools/check.py
+6. ถ้า fail หรือยังไม่ครบ ให้แก้จนผ่านก่อน
+7. ถ้าแก้ไม่ได้ ให้บอก blocker ชัดๆ ห้ามบอกว่าเสร็จ
+8. สรุปผลสุดท้าย: ทำอะไร, ผ่าน proof อะไร, ยังเหลือ risk อะไร
 ```
 
 ## 1. Human Decision Gate

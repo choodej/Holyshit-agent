@@ -12,6 +12,7 @@
 | วิธีใช้ | scaffold organ เล็กใน `sandbox/`, รัน demo, แล้วผ่านประตูเดียว |
 | ถ้าอธิบายงานไม่เป็น | ใช้ `PROMPTS.md` ให้ AI อธิบายด้วยภาษาง่ายๆ แล้วถามจน brief ครบตาม `RULES.md` §0 |
 | ประตูจบงาน | `cd sandbox && python tools/check.py` |
+| ก่อนส่งงานจริง | ให้ AI review diff กับ brief ที่ยืนยันแล้ว แก้จนผ่าน gate หรือรายงาน blocker |
 | จุดที่ AI ต้องถาม | decision ใหญ่ต้องเสนอ 4 ทางเลือก + recommended ตาม `RULES.md` §10 |
 | กฎจริงอยู่ไหน | `.claude/skills/organ-kit/reference/RULES.md` เป็น canonical source |
 

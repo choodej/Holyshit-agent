@@ -65,6 +65,10 @@ cd sandbox
 python tools/check.py
 ```
 
+Then review the final diff against the user's confirmed brief. Fix anything
+incomplete or out of scope, rerun the gate if files changed, and report any
+remaining blocker plainly.
+
 For repo-level agent discipline, read `AGENTS.md`. For detailed workflow rules,
 read `.claude/skills/organ-kit/SKILL.md` and load
 `.claude/skills/organ-kit/reference/RULES.md` when the reasoning behind a rule

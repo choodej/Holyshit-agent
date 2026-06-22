@@ -101,6 +101,8 @@ python tools/check.py                             # full proof gate
    database, queue, dashboard, or optimization until the slice passes.
 5. Run the demo and `python tools/check.py`. If anything fails, keep looping on
    that success criterion before widening scope.
+6. Review the final diff against the confirmed brief before reporting success.
+   If anything is incomplete or out of scope, fix it or report the blocker.
 
 ## Manifest contract
 Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
@@ -115,7 +117,8 @@ schema/checklist drift fails before catalog generation.
 2. Run the generator. Do **not** hand-write the scaffold.
 3. Fill in the real domain logic inside `domain/service.py` only; keep ports/adapters thin.
 4. Run `python tools/check.py`.
-5. Report results plainly (tests passing/failing as they are).
+5. Review the final diff against the requested organ and report results plainly
+   (tests passing/failing as they are).
 
 ## Distributing this skill
 Copy `.claude/skills/organ-kit/` into any repo's `.claude/skills/`. It is
