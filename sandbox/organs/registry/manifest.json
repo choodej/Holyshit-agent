@@ -13,5 +13,7 @@
   },
   "exposes": ["register(username, source) -> Result[Member]"],
   "depends_on": [],
-  "owns_data": ["members.jsonl", "registry.log.jsonl"]
+  "owns_data": ["members.jsonl", "registry.log.jsonl"],
+  "external_writes": ["clickup.create_task"],
+  "safety_gate": true
 }
