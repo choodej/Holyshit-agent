@@ -110,6 +110,28 @@ Each organ tracks this order in two places:
 - `CHECKLIST.md` — the human checklist to follow while building
 - `manifest.json.phase` — the machine-readable phase that graphify reports
 
+## 9. Two-tier Definition of Done
+**Why:** a spike can teach the right contract without being production-ready.
+Treating that as "done" is how throwaway discoveries leak into real systems.
+
+Use two explicit done states:
+
+- **learning-done:** the question is answered, the contract is clearer, or the
+  risky unknown is reduced. Spikes, notes, screenshots, and temporary scripts can
+  qualify. This does **not** mean the organ is ready to promote.
+- **implementation-done:** the organ's current slice is built in order, tests
+  pass, demo runs, `graphify --strict` is clean, external writes are guarded, and
+  `CHECKLIST.md` plus `manifest.json.phase` agree.
+
+Only **implementation-done** work can move from `sandbox/` to `project/`.
+Learning-done work must either be deleted after it teaches the contract, turned
+into implementation work in the right phase, or recorded in the organ's
+`DEFERRED.md`.
+
+Every organ keeps a local `DEFERRED.md` beside `CHECKLIST.md`. Use it only for
+work intentionally delayed because it belongs to a later phase or needs a real
+trigger. Do not use it as a general wishlist.
+
 ## What this kit deliberately does NOT do
 - No mandatory message broker, no mandatory DB, no mandatory cloud. Start with
   files; add infrastructure only when an organ proves it needs it.
