@@ -54,6 +54,7 @@ python tools/check.py
 
 ใช้กับ Claude Code: เปิด repo นี้แล้ว `CLAUDE.md` จะบอกกฎ project ให้ Claude โหลดอัตโนมัติ.
 ใช้กับ agent อื่น: อ่าน `AGENTS.md` ก่อน แล้วตาม pointer ไปที่ `RULES.md`.
+ถ้าอยากได้คำสั่งก็อปวางสำหรับมือใหม่ ดู `PROMPTS.md`.
 ดูตัวอย่างกัน AI หลงทางใน `ANTI_DRIFT_EXAMPLES.md`.
 
 **Core features (frozen):**

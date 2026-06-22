@@ -20,6 +20,7 @@ ROUTING_DOCS = [
     "CLAUDE.md",
     "README.md",
     ".claude/skills/organ-kit/SKILL.md",
+    "PROMPTS.md",
     "ANTI_DRIFT_EXAMPLES.md",
 ]
 
