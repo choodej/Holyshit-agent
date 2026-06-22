@@ -56,11 +56,11 @@ Success criteria in this repo usually means:
 
 ```bash
 cd sandbox
-python3 -m pytest -q
-python3 tools/validate_manifests.py
-python3 tools/graphify.py --strict
-git diff --exit-code CATALOG.md graph.json graph.mmd
+python tools/check.py
 ```
+
+This one gate runs tests, doc lint, manifest validation, strict graphify, and
+generated graph drift detection.
 
 ## Work Mode Check
 

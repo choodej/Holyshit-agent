@@ -81,8 +81,7 @@ Then:
 cd sandbox
 python3 -m pytest organs/<organ_name>/tests -q    # should pass immediately
 python3 organs/<organ_name>/app.py --demo         # see the slice run
-python3 tools/validate_manifests.py               # manifest/checklist proof
-python3 tools/graphify.py                          # refresh CATALOG.md / graph.json / graph.mmd
+python tools/check.py                             # full proof gate
 ```
 
 ## What I (Claude) should do when asked to start a project
@@ -97,22 +96,22 @@ python3 tools/graphify.py                          # refresh CATALOG.md / graph.
    - success criteria as a test/demo command.
 4. Create the smallest organ that proves that slice. Do not add a "brain",
    database, queue, dashboard, or optimization until the slice passes.
-5. Run the test/demo and graphify. If anything fails, keep looping on that
-   success criterion before widening scope.
+5. Run the demo and `python tools/check.py`. If anything fails, keep looping on
+   that success criterion before widening scope.
 
 ## Manifest contract
 Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
 `graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
 `safety_gate` for shadow detection, and reports `phase` as the organ's
 skeleton-first progress marker. Keep each organ's `CHECKLIST.md` and
-`manifest.json` phase in sync. Run `tools/validate_manifests.py` before
-`graphify.py` so schema/checklist drift fails before catalog generation.
+`manifest.json` phase in sync. Run `python tools/check.py` so
+schema/checklist drift fails before catalog generation.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).
 2. Run the generator. Do **not** hand-write the scaffold.
 3. Fill in the real domain logic inside `domain/service.py` only; keep ports/adapters thin.
-4. Run the tests, then regenerate the catalog.
+4. Run `python tools/check.py`.
 5. Report results plainly (tests passing/failing as they are).
 
 ## Distributing this skill

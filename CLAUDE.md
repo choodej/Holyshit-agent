@@ -15,7 +15,8 @@ projects with a small, testable first slice before adding architecture.
 - Define the first slice before scaffolding:
   input -> domain decision -> saved/logged result -> test/demo proof.
 - Success criteria must be executable: tests pass, demo runs, and graphify is
-  strict-clean.
+  strict-clean. Before reporting success, run `python tools/check.py` from
+  `sandbox/`.
 
 ## Organ Rules
 
@@ -47,9 +48,7 @@ projects with a small, testable first slice before adding architecture.
 
 ```bash
 cd sandbox
-python3 tools/validate_manifests.py
-python3 tools/graphify.py --strict
-git diff --exit-code CATALOG.md graph.json graph.mmd
+python tools/check.py
 ```
 
 ## Required Checks
@@ -58,10 +57,7 @@ Run these before reporting success:
 
 ```bash
 cd sandbox
-python3 -m pytest -q
-python3 tools/validate_manifests.py
-python3 tools/graphify.py --strict
-git diff --exit-code CATALOG.md graph.json graph.mmd
+python tools/check.py
 ```
 
 For repo-level agent discipline, read `AGENTS.md`. For detailed workflow rules,

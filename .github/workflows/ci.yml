@@ -24,14 +24,5 @@ jobs:
       - name: Install test dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Run tests
-        run: python -m pytest -q
-
-      - name: Validate organ manifests
-        run: python tools/validate_manifests.py
-
-      - name: Run strict graph check
-        run: python tools/graphify.py --strict
-
-      - name: Ensure generated graph artifacts are committed
-        run: git diff --exit-code CATALOG.md graph.json graph.mmd
+      - name: Run check gate
+        run: python tools/check.py

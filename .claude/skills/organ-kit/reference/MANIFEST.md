@@ -71,11 +71,11 @@ If an organ has no external writes, omit `external_writes` or set it to `[]`.
 
 Every organ should also keep a `CHECKLIST.md` beside `manifest.json`. Update
 both files together: the checklist is the human artifact; `phase` is what
-`graphify` reports. Run this before regenerating the graph:
+`graphify` reports. Run the one gate before reporting success:
 
 ```bash
 cd sandbox
-python3 tools/validate_manifests.py
+python tools/check.py
 ```
 
 ## Minimal Example

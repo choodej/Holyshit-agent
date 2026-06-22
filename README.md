@@ -20,14 +20,12 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r sandbox/requirements.txt
 cd sandbox
-python -m pytest -q
-python tools/validate_manifests.py
+python tools/check.py
 python organs/registry/app.py --demo          # includes compressed next-agent handoff state
-python tools/graphify.py --strict
 ```
 
-ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, demo slice รันได้, handoff state ถูกย่อ,
-manifest/checklist ไม่ drift, และ graph ไม่มี shadow.
+ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, doc ไม่ drift, manifest/checklist ไม่ drift,
+graph ไม่มี shadow, demo slice รันได้, และ handoff state ถูกย่อ.
 
 ถ้าจะสร้าง organ แรกของตัวเอง:
 
@@ -35,13 +33,12 @@ manifest/checklist ไม่ drift, และ graph ไม่มี shadow.
 cd ..
 python3 .claude/skills/organ-kit/scripts/new_organ.py first_task --title "First task"
 cd sandbox
-python -m pytest organs/first_task/tests -q
-python tools/validate_manifests.py
-python tools/graphify.py --strict
+python tools/check.py
 ```
 
 ใช้กับ Claude Code: เปิด repo นี้แล้ว `CLAUDE.md` จะบอกกฎ project ให้ Claude โหลดอัตโนมัติ.
 ใช้กับ agent อื่น: อ่าน `AGENTS.md` ก่อน แล้วตาม pointer ไปที่ `RULES.md`.
+ดูตัวอย่างกัน AI หลงทางใน `ANTI_DRIFT_EXAMPLES.md`.
 
 **Core features (frozen):**
 - 🧩 **Hexagonal OOP** — domain บริสุทธิ์ คุยโลกภายนอกผ่าน ports/adapters เท่านั้น
@@ -74,6 +71,8 @@ python tools/graphify.py --strict
 | ไฟล์ | หน้าที่ |
 |---|---|
 | `sandbox/shared/safety.py` | `SafetyGate` (PolicyGate/DryRunGate/...) + `ExternalWriteAdapter` กั้นทุกการเขียนนอก |
+| `sandbox/tools/check.py` | ประตูเดียวก่อนบอกว่างานเสร็จ: tests + doc lint + manifest + graph guard |
+| `sandbox/tools/doc_lint.py` | จับ rule-like docs ที่ไม่ชี้ canonical `RULES.md` หรือไม่ชี้ check gate |
 | `sandbox/manifest.schema.json` | schema ของ `manifest.json`; ระบุ field ที่ graphify ใช้จับ shadow |
 | `sandbox/tools/validate_manifests.py` | ตรวจ `manifest.json` + `CHECKLIST.md` phase ก่อน graphify/CI |
 | `sandbox/tools/graphify.py` | สารบัญ + Mermaid + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
