@@ -54,6 +54,36 @@ contract — no parallel concept.
 - Bounded, not bloated: enforced by a small `ExternalWriteAdapter` base class +
   convention, not a heavy framework.
 
+## 8. Skeleton-first build order (bone before tissue)
+**Why:** the classic failure is building "tissue" (real adapters, UI, deep
+workflow logic) before the "bone" (contracts and a proof) exists — so the proof
+never comes and the design ossifies around accidental choices.
+
+**Scope: this order applies _within one organ_, not as a global gate across the
+whole system.** At the system level you still build a thin **vertical slice**
+first (rule below) — one path cut through every layer — then widen. The two are
+not in conflict: the slice decides _which_ organ to build next; this rule
+decides the _order inside_ that organ.
+
+Default order inside an organ:
+1. skeleton — minimal class/object shells, manifest, audit/event schema
+2. contracts — the `ports/` (ABC interfaces) the domain needs
+3. harness proof — a test that **fails first**, pinning the intended behavior
+4. domain logic — make the failing test pass (pure, no I/O)
+5. adapters — real I/O behind the ports (DB, API, Telegram, ...)
+6. UI / workflow detail
+7. optimization (incl. token compression, caching)
+
+**Rule, not a straitjacket:** a task that lands in a later step before an
+earlier one is finished is **deferred by default** — mark it deferred, note why,
+and return to the missing bone first. It is *not* "invalid". Throwaway spikes to
+_learn_ a contract are allowed and encouraged; just discard them once the
+contract is understood, then build it properly in order. Deep adapter logic
+before its port + a failing test exist is the one hard "no".
+
+("Models" is intentionally not a numbered step: domain models are bone and live
+in step 1/4; serving an ML model is tissue and lives in step 5+.)
+
 ## What this kit deliberately does NOT do
 - No mandatory message broker, no mandatory DB, no mandatory cloud. Start with
   files; add infrastructure only when an organ proves it needs it.
