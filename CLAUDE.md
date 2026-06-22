@@ -32,6 +32,9 @@ projects with a small, testable first slice before adding architecture.
 
 ## Generated Graph Contract
 
+- Read `.claude/skills/organ-kit/reference/MANIFEST.md` before hand-editing any
+  `manifest.json`.
+- Use `sandbox/manifest.schema.json` as the manifest schema.
 - Never hand-edit `sandbox/CATALOG.md`, `sandbox/graph.json`, or
   `sandbox/graph.mmd`.
 - After manifest or organ changes, run:

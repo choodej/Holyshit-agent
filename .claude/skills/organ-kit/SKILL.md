@@ -67,6 +67,7 @@ python3 .claude/skills/organ-kit/scripts/new_organ.py <organ_name> \
 
 It will:
 - refuse if the organ already exists (rule 4 — ask before create),
+- ensure `manifest.schema.json` exists at the sandbox root,
 - ensure `shared/` and `tools/` exist (created once, never overwritten),
 - stamp out a self-contained organ: `domain/ ports/ adapters/ tests/ app.py manifest.json`,
 - leave you an organ that **already runs and passes its smoke test**.
@@ -93,6 +94,11 @@ python3 tools/graphify.py                          # refresh CATALOG.md / graph.
    database, queue, dashboard, or optimization until the slice passes.
 5. Run the test/demo and graphify. If anything fails, keep looping on that
    success criterion before widening scope.
+
+## Manifest contract
+Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
+`graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
+`safety_gate` for shadow detection, so those fields must be declared honestly.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).

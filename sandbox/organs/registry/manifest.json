@@ -1,4 +1,5 @@
 {
+  "$schema": "../../manifest.schema.json",
   "organ": "registry",
   "title": "สมัครสมาชิก (Registration)",
   "version": "0.1.0",

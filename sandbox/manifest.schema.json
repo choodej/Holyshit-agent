@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/choodej/ohlyshit/sandbox/manifest.schema.json",
+  "title": "organ-kit manifest",
+  "type": "object",
+  "required": [
+    "organ",
+    "title",
+    "version",
+    "language",
+    "status",
+    "purpose",
+    "ports",
+    "adapters",
+    "exposes",
+    "depends_on",
+    "owns_data"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Relative path to this schema, usually ../../manifest.schema.json"
+    },
+    "organ": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,30}$",
+      "description": "Stable organ id. Must match the organ directory name."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable organ name."
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Organ version."
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Primary implementation language."
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Lifecycle status, for example scaffolded or slice-proven."
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One sentence explaining the user-visible job this organ owns."
+    },
+    "ports": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Port/interface names the organ exposes or consumes."
+    },
+    "adapters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 },
+        "uniqueItems": true
+      },
+      "description": "Map each port name to concrete adapter ids. graphify uses this for Mermaid edges."
+    },
+    "exposes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Published contract signatures other organs may use."
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]{2,30}$" },
+      "uniqueItems": true,
+      "description": "Other organ ids this organ depends on. graphify detects circular and dangling dependencies."
+    },
+    "owns_data": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "Canonical data domains/files this organ owns. graphify detects overlaps case-insensitively."
+    },
+    "external_writes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true,
+      "description": "External write operations this organ can perform, such as clickup.create_task."
+    },
+    "safety_gate": {
+      "type": "boolean",
+      "description": "Must be true when external_writes is non-empty, or graphify --strict reports a shadow."
+    }
+  },
+  "additionalProperties": true
+}

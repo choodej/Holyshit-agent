@@ -68,6 +68,7 @@ python tools/graphify.py --strict
 | ไฟล์ | หน้าที่ |
 |---|---|
 | `sandbox/shared/safety.py` | `SafetyGate` (PolicyGate/DryRunGate/...) + `ExternalWriteAdapter` กั้นทุกการเขียนนอก |
+| `sandbox/manifest.schema.json` | schema ของ `manifest.json`; ระบุ field ที่ graphify ใช้จับ shadow |
 | `sandbox/tools/graphify.py` | สารบัญ + Mermaid + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
 | `sandbox/tools/token_compressor.py` | ย่อ JSON/log เป็น state แน่นๆ (lossless / digest) — สำหรับ context ไม่ใช่ audit log |
 

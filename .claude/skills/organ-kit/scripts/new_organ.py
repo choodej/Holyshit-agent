@@ -9,6 +9,7 @@ Usage:
 
 Guarantees (the kit's rules):
   - refuses if the organ already exists (ask-before-create; never overwrites)
+  - ensures manifest.schema.json exists at the sandbox root
   - ensures shared/ and tools/ exist once (created, never overwritten)
   - the new organ already runs and passes its smoke test
 """
@@ -76,6 +77,7 @@ def main(argv: list[str] | None = None) -> int:
     sandbox_root = organs_dir.parent              # e.g. .../sandbox
     shared_dir = sandbox_root / "shared"
     tools_dir = sandbox_root / "tools"
+    schema_file = sandbox_root / "manifest.schema.json"
 
     # ask-before-create: never overwrite an existing organ
     if organ_dir.exists():
@@ -85,6 +87,12 @@ def main(argv: list[str] | None = None) -> int:
         return 3
 
     # ensure shared/ and tools/ (created once, never overwritten)
+    if not schema_file.exists():
+        schema_file.parent.mkdir(parents=True, exist_ok=True)
+        schema_file.write_text(
+            (TEMPLATES / "manifest.schema.json").read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
     n_shared = _copy_tree(TEMPLATES / "shared", shared_dir, ctx, overwrite=False)
     n_tools = _copy_tree(TEMPLATES / "tools", tools_dir, ctx, overwrite=False)
     # ensure organs/ is a package

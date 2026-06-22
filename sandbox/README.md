@@ -6,6 +6,7 @@
 
 ```
 sandbox/
+  manifest.schema.json    # schema ของ organs/*/manifest.json
   shared/                 # contract กลางที่ทุกอวัยวะใช้ร่วม
     result.py             # Result/Outcome — ปลอดภัย ไม่ throw มั่ว, รองรับ "ถามก่อนสร้าง"
     ids.py                # สร้าง id + ตรวจซ้ำ
