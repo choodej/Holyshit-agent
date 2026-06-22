@@ -1,7 +1,15 @@
-# ohlyshit — Universal OOP Base Framework for AI Agents
+# ohlyshit — First-Button Project Skill for AI Agents
 
-ระบบที่ประกอบจาก "อวัยวะ" (organ) อิสระ แต่ละอวัยวะทดสอบได้จริงด้วยตัวเอง
-ก่อนจะนำมาต่อกันเป็น "สมอง + เส้นประสาท" ภายหลัง
+กฎ + skill สำหรับมือใหม่ที่อยากเริ่มโปรเจคหรืองานให้ถูกตั้งแต่ "กระดุมเม็ดแรก"
+ก่อนเขียนของใหญ่ ให้บีบงานให้เป็น slice เล็กที่ทดสอบได้จริง แล้วค่อยแยกเป็น
+"อวัยวะ" (organ) อิสระที่ซ่อม/ทดสอบ/ต่อยอดได้ทีละชิ้น
+
+## ใช้ทำอะไร
+
+- ปูพื้นฐานโปรเจคใหม่ให้ไม่เริ่มจากโครงใหญ่เกินตัว
+- บังคับให้มี success criteria ก่อนเขียนโค้ด
+- สร้าง module/service/department แบบมี test และ safety gate ตั้งแต่แรก
+- ให้ AI assistant ทำงานแบบถามเมื่อไม่ชัด เสนอทางเลือกเมื่อมีหลายทาง และแก้แบบ surgical
 
 **Core features (frozen):**
 - 🧩 **Hexagonal OOP** — domain บริสุทธิ์ คุยโลกภายนอกผ่าน ports/adapters เท่านั้น
@@ -11,6 +19,10 @@
 
 ## หลักการ (กฎที่ล็อกแล้ว)
 
+0. **ติดกระดุมเม็ดแรกให้ถูกก่อนเขียนโค้ด**
+   - ถ้ายังตอบไม่ได้ว่า "ผู้ใช้ทำอะไรได้ 1 อย่าง" และ "พิสูจน์ว่าผ่านยังไง" ให้ถามก่อน
+   - เริ่มจาก vertical slice ที่เล็กที่สุด: input → domain decision → saved/logged result
+   - success criteria ต้องทดสอบได้ เช่น test ผ่าน, demo command รันได้, graph ไม่มี shadow
 1. **แยก sandbox / project ชัดเจน**
    - `sandbox/` = ที่เขียนใหม่ ทดลอง พิสูจน์ว่าทำงานจริง
    - `project/` = ของจริง รับเฉพาะอวัยวะที่สมบูรณ์พร้อมใช้แล้วเท่านั้น
@@ -45,7 +57,7 @@
 สร้างอวัยวะใหม่ (รันได้โดยไม่ต้องมี AI):
 
 ```bash
-python .claude/skills/organ-kit/scripts/new_organ.py <organ_name> --title "ชื่อ"
+python3 .claude/skills/organ-kit/scripts/new_organ.py <organ_name> --title "ชื่อ"
 ```
 
 ได้อวัยวะที่ **รันได้ + ผ่านเทสทันที** พร้อมกฎ ask-before-create, log JSONL, และ

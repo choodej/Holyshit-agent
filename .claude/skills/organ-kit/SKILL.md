@@ -1,6 +1,6 @@
 ---
 name: organ-kit
-description: Scaffold and grow an "organ-based" backend — independent, testable modules ("organs") in clean OOP/Hexagonal style, connected only through adapters. Use when the user wants to add a new module/service/"department"/"organ", set up this architecture in any project, or asks for a safe scaffold with ask-before-create guards, local JSONL logging, and an auto-generated dependency catalog. Language-agnostic in spirit; ships a Python generator.
+description: Help beginners start a project/task with the right first button, then scaffold and grow an "organ-based" backend: independent, testable modules ("organs") in clean OOP/Hexagonal style connected only through adapters. Use when the user wants rules/skills for project foundations, needs a new module/service/"department"/"organ", wants to set up this architecture in any project, or asks for a safe scaffold with ask-before-create guards, local JSONL logging, and an auto-generated dependency catalog. Language-agnostic in spirit; ships a Python generator.
 ---
 
 # organ-kit
@@ -10,14 +10,23 @@ independent unit you can build, test, and repair on its own, then connect to the
 rest through adapters. Designed so a big system stays controllable instead of
 turning into one tangled blob.
 
+Its first job is simpler than architecture: help a beginner button the first
+button correctly. Before writing code, reduce the project to one user-visible
+slice with a testable success criterion.
+
 ใช้ภาษาไทยกับผู้ใช้ได้ แต่ไฟล์ที่ generate เป็นกลาง ใช้ได้ทุกโปรเจค
 
 ## When to use
+- User asks for beginner rules / a project-starting skill / "first button"
+  guidance before building.
 - User asks to add a new organ / module / "department" / service.
 - User wants to set up the organ architecture in a fresh or existing project.
 - User wants a scaffold that already runs and passes a smoke test.
 
 ## Core rules (read `reference/RULES.md` for the why)
+0. **First-button rule:** if the purpose, smallest useful slice, or pass/fail
+   proof is unclear, ask before coding. The first slice must fit this shape:
+   input -> domain decision -> saved/logged result -> test/demo proves it.
 1. **Separate `sandbox/` from `project/`.** Prove an organ in sandbox first;
    promote to project only when complete.
 2. **Every organ is OOP + Hexagonal:** pure `domain/` talks to the world only
@@ -52,7 +61,7 @@ turning into one tangled blob.
 Prefer the deterministic generator (works with or without me):
 
 ```bash
-python .claude/skills/organ-kit/scripts/new_organ.py <organ_name> \
+python3 .claude/skills/organ-kit/scripts/new_organ.py <organ_name> \
     --title "Human title" --dir sandbox/organs
 ```
 
@@ -65,10 +74,25 @@ It will:
 Then:
 ```bash
 cd sandbox
-python -m pytest organs/<organ_name>/tests -q     # should pass immediately
-python organs/<organ_name>/app.py --demo          # see the slice run
-python tools/graphify.py                           # refresh CATALOG.md / graph.json / graph.mmd
+python3 -m pytest organs/<organ_name>/tests -q    # should pass immediately
+python3 organs/<organ_name>/app.py --demo         # see the slice run
+python3 tools/graphify.py                          # refresh CATALOG.md / graph.json / graph.mmd
 ```
+
+## What I (Claude) should do when asked to start a project
+1. Restate the public-good purpose in one sentence.
+2. Ask only for missing critical facts. If there are multiple valid directions,
+   list them plainly and mark one recommended path.
+3. Define the first slice before scaffolding:
+   - user-visible action,
+   - input,
+   - domain decision,
+   - persisted/logged output,
+   - success criteria as a test/demo command.
+4. Create the smallest organ that proves that slice. Do not add a "brain",
+   database, queue, dashboard, or optimization until the slice passes.
+5. Run the test/demo and graphify. If anything fails, keep looping on that
+   success criterion before widening scope.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).

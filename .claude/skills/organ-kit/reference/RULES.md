@@ -3,6 +3,28 @@
 Neutralized from a real build. Each rule fixes a concrete failure mode and is
 written so it stays cheap (no bloat, no slowdown).
 
+## 0. First-button rule: define the proof before code
+**Why:** beginners often start by copying folders, choosing infrastructure, or
+asking an AI to "build the system" before the job has a testable shape. That is
+how projects become impressive but useless.
+
+Before coding, define:
+- **public-good purpose:** who benefits, in one sentence
+- **smallest useful slice:** one action a real user can complete
+- **input:** what the slice receives
+- **domain decision:** what the core must decide without external I/O
+- **output:** what is saved or logged
+- **success criteria:** a test/demo command that proves the slice works
+
+If any of these are unclear, ask. If there are several valid slices, return the
+options and mark one recommended path. Do not silently choose.
+
+Good first slice:
+`submit request -> validate/decide category -> save JSONL record -> emit audit log`
+
+Bad first slice:
+`build the full platform with dashboard, AI, database, automation, and deploy`
+
 ## 1. sandbox / project separation
 **Why:** designing big and stuffing everything into one place becomes
 uncontrollable. Prove organs in `sandbox/`; only finished, ready organs move to

@@ -28,11 +28,11 @@ sandbox/
 
 ```bash
 cd sandbox
-python -m pip install -r requirements.txt      # pytest (+ python-telegram-bot ถ้าจะต่อจริง)
-python -m pytest organs/registry/tests -q      # พิสูจน์อวัยวะทำงานจริง
-python organs/registry/app.py --demo           # รัน slice แบบ demo (ไม่ต้องมี token)
-python -m pytest -q                             # เทสทั้งหมด (organs + core utilities)
-python tools/graphify.py                         # สร้างสารบัญ + ตรวจเงา (เพิ่ม --strict ให้ fail บน warning)
+python3 -m pip install -r requirements.txt     # pytest (+ python-telegram-bot ถ้าจะต่อจริง)
+python3 -m pytest organs/registry/tests -q     # พิสูจน์อวัยวะทำงานจริง
+python3 organs/registry/app.py --demo          # รัน slice แบบ demo (ไม่ต้องมี token)
+python3 -m pytest -q                            # เทสทั้งหมด (organs + core utilities)
+python3 tools/graphify.py                        # สร้างสารบัญ + ตรวจเงา (เพิ่ม --strict ให้ fail บน warning)
 ```
 
-ต่อ Telegram จริง: ตั้ง `TELEGRAM_BOT_TOKEN` แล้ว `python organs/registry/app.py --telegram`
+ต่อ Telegram จริง: ตั้ง `TELEGRAM_BOT_TOKEN` แล้ว `python3 organs/registry/app.py --telegram`
