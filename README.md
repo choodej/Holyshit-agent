@@ -1,15 +1,30 @@
 # ohlyshit — First-Button Project Skill for AI Agents
 
-กฎ + skill สำหรับมือใหม่ที่อยากเริ่มโปรเจคหรืองานให้ถูกตั้งแต่ "กระดุมเม็ดแรก"
-ก่อนเขียนของใหญ่ ให้บีบงานให้เป็น slice เล็กที่ทดสอบได้จริง แล้วค่อยแยกเป็น
-"อวัยวะ" (organ) อิสระที่ซ่อม/ทดสอบ/ต่อยอดได้ทีละชิ้น
+กัน AI coding พาโปรเจคหลงทาง บวม และเขียนไม่จบ โดยบังคับให้เริ่มจาก
+**งานเล็ก 1 ชิ้นที่พิสูจน์ได้จริง** ก่อนสร้าง architecture ใหญ่.
+
+## อ่านใน 30 วินาที
+
+| คำถาม | คำตอบ |
+|---|---|
+| ปัญหาที่แก้ | AI มักรีบสร้าง dashboard, database, queue, adapter, doc เยอะๆ ก่อนมี proof |
+| วิธีคิด | เริ่มจาก first button: `input -> domain decision -> saved/logged result -> proof` |
+| วิธีใช้ | scaffold organ เล็กใน `sandbox/`, รัน demo, แล้วผ่านประตูเดียว |
+| ประตูจบงาน | `cd sandbox && python tools/check.py` |
+| กฎจริงอยู่ไหน | `.claude/skills/organ-kit/reference/RULES.md` เป็น canonical source |
+
+เหมาะกับคนที่ใช้ Claude Code / Codex / Copilot ทำโปรเจคใหม่แล้วอยากให้ AI
+ถามเมื่อไม่ชัด, ทำ slice เล็กก่อน, และหยุดสร้างของใหญ่ที่ยังพิสูจน์ไม่ได้.
+
+ไม่เหมาะถ้าคุณต้องการ full-stack framework สำเร็จรูป, dashboard พร้อมใช้,
+หรือระบบ production ขนาดใหญ่ตั้งแต่คำสั่งแรก.
 
 ## ใช้ทำอะไร
 
-- ปูพื้นฐานโปรเจคใหม่ให้ไม่เริ่มจากโครงใหญ่เกินตัว
-- บังคับให้มี success criteria ก่อนเขียนโค้ด
-- สร้าง module/service/department แบบมี test และ safety gate ตั้งแต่แรก
-- ให้ AI assistant ทำงานแบบถามเมื่อไม่ชัด เสนอทางเลือกเมื่อมีหลายทาง และแก้แบบ surgical
+- ปูพื้นฐานโปรเจคใหม่ให้ไม่เริ่มจากโครงใหญ่เกินตัว.
+- บังคับให้มี success criteria ก่อนเขียนโค้ด.
+- สร้าง module/service/department เป็น "organ" ที่มี test และ safety gate.
+- ให้ AI assistant ทำงานแบบถามเมื่อไม่ชัด เสนอทางเลือกเมื่อมีหลายทาง และแก้แบบ surgical.
 
 ## Quickstart 60 วินาที
 
