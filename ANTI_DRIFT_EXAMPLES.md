@@ -106,6 +106,32 @@ python tools/check.py
 
 ให้ `graphify.py` generate graph จาก manifest เท่านั้น.
 
+**เลือก feature หรือ production path แทนเจ้าของงาน**
+
+ผิด:
+
+```text
+Goal is vague, so build auth + billing + production database first.
+```
+
+ผลเสีย: AI เลือกเป้าหมายจริงแทนคน และอาจผูกงานเข้ากับ secret/production ก่อนมี proof.
+
+ถูก:
+
+```text
+Decision point: first production-facing slice
+
+A. Smallest local proof — safest
+B. Reversible spike — fastest learning
+C. Full production path — only after approval
+D. Shadow preview — map risk without writing
+
+Recommended: A
+Why: proves value before touching production/auth/secrets.
+```
+
+ใช้ `RULES.md` §10 ก่อนตัดสินใจใหญ่ทุกครั้ง.
+
 ## ถูกทาง
 
 ก่อนบอกว่างานเสร็จ ให้ผ่านประตูเดียวนี้:

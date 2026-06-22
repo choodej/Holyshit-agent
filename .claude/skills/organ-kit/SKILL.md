@@ -46,6 +46,8 @@ slice with a testable success criterion.
 8. **Skeleton-first + deferred work:** follow `reference/RULES.md` §8.
 9. **Two-tier DoD:** `learning-done` is not `implementation-done`; follow
    `reference/RULES.md` §9.
+10. **Human Decision Gate:** for major direction-setting choices, follow
+   `reference/RULES.md` §10: four options, one recommendation, clear tradeoff.
 
 ## Built-in framework features
 - **Hexagonal OOP** scaffolding for every organ.
@@ -86,8 +88,9 @@ python tools/check.py                             # full proof gate
 
 ## What I (Claude) should do when asked to start a project
 1. Restate the public-good purpose in one sentence.
-2. Ask only for missing critical facts. If there are multiple valid directions,
-   list them plainly and mark one recommended path.
+2. Ask only for missing critical facts. If a `reference/RULES.md` §10 decision
+   point appears, offer four options, mark one recommended path, and explain the
+   tradeoff.
 3. Define the first slice before scaffolding:
    - user-visible action,
    - input,

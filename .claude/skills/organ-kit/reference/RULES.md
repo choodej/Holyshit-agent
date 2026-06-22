@@ -132,6 +132,38 @@ Every organ keeps a local `DEFERRED.md` beside `CHECKLIST.md`. Use it only for
 work intentionally delayed because it belongs to a later phase or needs a real
 trigger. Do not use it as a general wishlist.
 
+## 10. Human Decision Gate
+**Why:** code guards catch drift after work starts, but the most expensive drift
+happens before coding: the agent chooses the wrong goal, wrong feature, wrong
+write path, or treats learning as runtime approval. That choice belongs to the
+human.
+
+Pause and ask before acting when any of these are true:
+- the real project goal or user benefit is unclear,
+- several features or first slices could reasonably come first,
+- the path touches external writes, production, secrets, auth, billing, or real
+  user/customer data,
+- learning-done work might be promoted, deleted, deferred, or rebuilt,
+- UX, business, legal, or security context would change the correct answer.
+
+Use this format:
+
+```text
+Decision point: <what must be decided>
+
+A. <safest/smallest proof> — best when...
+B. <fastest reversible spike> — best when...
+C. <fuller implementation> — best when...
+D. <defer / shadow preview / read-only mapping> — best when...
+
+Recommended: <A/B/C/D>
+Why: <reason + tradeoff>
+```
+
+Do not ask four choices for small reversible implementation details, formatting,
+or code style when the user's goal is already clear. If the user already chose a
+path and no new trigger appears, continue. If a new trigger appears, stop again.
+
 ## What this kit deliberately does NOT do
 - No mandatory message broker, no mandatory DB, no mandatory cloud. Start with
   files; add infrastructure only when an organ proves it needs it.

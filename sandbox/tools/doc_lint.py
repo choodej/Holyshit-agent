@@ -13,6 +13,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CANONICAL_RULES = ".claude/skills/organ-kit/reference/RULES.md"
 CHECK_GATE = "python tools/check.py"
+DECISION_GATE = "§10"
 
 ROUTING_DOCS = [
     "AGENTS.md",
@@ -61,11 +62,19 @@ def lint_docs(root: Path = REPO_ROOT) -> list[str]:
         if token not in examples:
             errors.append(f"ANTI_DRIFT_EXAMPLES.md: missing example section {token}")
 
+    rules = _read(root, CANONICAL_RULES)
+    if rules is None:
+        errors.append(f"{CANONICAL_RULES}: missing canonical rules")
+    elif "## 10. Human Decision Gate" not in rules:
+        errors.append(f"{CANONICAL_RULES}: missing Human Decision Gate rule")
+
     for rel_path, text in texts.items():
         if rel_path != "AGENTS.md" and "RULES.md" not in text and CANONICAL_RULES not in text:
             errors.append(f"{rel_path}: must route to RULES.md instead of becoming canonical")
         if CHECK_GATE not in text:
             errors.append(f"{rel_path}: must mention the one check gate `{CHECK_GATE}`")
+        if DECISION_GATE not in text:
+            errors.append(f"{rel_path}: must route major decisions to RULES.md §10")
 
     return errors
 

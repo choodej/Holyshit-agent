@@ -2,7 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.doc_lint import CHECK_GATE, DOC_CONTRACT_FIELDS, ROUTING_DOCS, lint_docs
+from tools.doc_lint import (
+    CANONICAL_RULES,
+    CHECK_GATE,
+    DECISION_GATE,
+    DOC_CONTRACT_FIELDS,
+    ROUTING_DOCS,
+    lint_docs,
+)
 
 
 def _write_docs(root: Path, *, agents_extra: str = "", examples_extra: str = "") -> None:
@@ -10,7 +17,7 @@ def _write_docs(root: Path, *, agents_extra: str = "", examples_extra: str = "")
         path = root / rel_path
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
-            f"# {rel_path}\n\nRoute to RULES.md.\n\nRun `{CHECK_GATE}`.\n",
+            f"# {rel_path}\n\nRoute to RULES.md {DECISION_GATE}.\n\nRun `{CHECK_GATE}`.\n",
             encoding="utf-8",
         )
 
@@ -19,19 +26,23 @@ def _write_docs(root: Path, *, agents_extra: str = "", examples_extra: str = "")
         "# AGENTS.md\n\n"
         "Do not create a second source of truth.\n\n"
         f"{fields}\n\n"
+        f"Route to RULES.md {DECISION_GATE}.\n\n"
         f"Run `{CHECK_GATE}`.\n"
         f"{agents_extra}",
         encoding="utf-8",
     )
     (root / "ANTI_DRIFT_EXAMPLES.md").write_text(
         "# ANTI_DRIFT_EXAMPLES.md\n\n"
-        "Route to RULES.md.\n\n"
+        f"Route to RULES.md {DECISION_GATE}.\n\n"
         f"Run `{CHECK_GATE}`.\n\n"
         "## หลงทาง\n\nBad example.\n\n"
         "## ถูกทาง\n\nGood example.\n"
         f"{examples_extra}",
         encoding="utf-8",
     )
+    rules = root / CANONICAL_RULES
+    rules.parent.mkdir(parents=True, exist_ok=True)
+    rules.write_text("# RULES.md\n\n## 10. Human Decision Gate\n", encoding="utf-8")
 
 
 def test_accepts_routing_docs_with_contract_and_check_gate(tmp_path):
@@ -60,6 +71,26 @@ def test_rejects_doc_that_does_not_route_to_rules(tmp_path):
     errors = lint_docs(tmp_path)
 
     assert any("CLAUDE.md" in error and "RULES.md" in error for error in errors)
+
+
+def test_rejects_doc_that_does_not_route_major_decisions_to_rule_10(tmp_path):
+    _write_docs(tmp_path)
+    (tmp_path / "CLAUDE.md").write_text(
+        f"# CLAUDE.md\n\nRoute to RULES.md.\n\nRun `{CHECK_GATE}`.\n", encoding="utf-8"
+    )
+
+    errors = lint_docs(tmp_path)
+
+    assert any("CLAUDE.md" in error and "§10" in error for error in errors)
+
+
+def test_rejects_missing_canonical_human_decision_gate(tmp_path):
+    _write_docs(tmp_path)
+    (tmp_path / CANONICAL_RULES).write_text("# RULES.md\n", encoding="utf-8")
+
+    errors = lint_docs(tmp_path)
+
+    assert any("Human Decision Gate" in error for error in errors)
 
 
 def test_live_docs_pass_doc_lint():

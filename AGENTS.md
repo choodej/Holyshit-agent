@@ -34,6 +34,9 @@ Before scaffolding, name the smallest useful slice:
 
 `input -> domain decision -> saved/logged result -> executable proof`
 
+For direction-setting choices, follow `RULES.md` §10: stop, offer four options,
+mark one recommended path, and explain the tradeoff.
+
 ## Simplicity First
 
 - โค้ดน้อยที่สุดที่แก้ปัญหาได้ จบ
@@ -77,6 +80,8 @@ Stop and ask if:
 - a rule claims a gate exists but no code/test/command proves it,
 - an adapter or external write path appears without manifest visibility,
 - V2/spec/learning knowledge is being treated as runtime approval,
+- goal, feature priority, production/auth/secret/write path, learning promotion,
+  or UX/business/legal/security context requires human judgment,
 - the requested change can be done in more than one materially different way.
 
 ## New Doc Checklist

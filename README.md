@@ -11,6 +11,7 @@
 | วิธีคิด | เริ่มจาก first button: `input -> domain decision -> saved/logged result -> proof` |
 | วิธีใช้ | scaffold organ เล็กใน `sandbox/`, รัน demo, แล้วผ่านประตูเดียว |
 | ประตูจบงาน | `cd sandbox && python tools/check.py` |
+| จุดที่ AI ต้องถาม | decision ใหญ่ต้องเสนอ 4 ทางเลือก + recommended ตาม `RULES.md` §10 |
 | กฎจริงอยู่ไหน | `.claude/skills/organ-kit/reference/RULES.md` เป็น canonical source |
 
 เหมาะกับคนที่ใช้ Claude Code / Codex / Copilot ทำโปรเจคใหม่แล้วอยากให้ AI
@@ -80,6 +81,7 @@ python tools/check.py
 7. **ทุก external write ผ่าน SafetyGate** — dry-run preview + ขออนุมัติ (งานย้อนกลับได้ auto) — ดู `sandbox/shared/safety.py`
 8. **Skeleton-first + deferred work** — ดู canonical rule ที่ `.claude/skills/organ-kit/reference/RULES.md` §8
 9. **Two-tier DoD** (`learning-done` ≠ `implementation-done`) — ดู `.claude/skills/organ-kit/reference/RULES.md` §9
+10. **Human Decision Gate** — decision ใหญ่ต้องถามพร้อม 4 ทางเลือก + recommended — ดู `RULES.md` §10
 
 ## Core utilities (frozen framework)
 
