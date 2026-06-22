@@ -16,9 +16,18 @@ Before coding, define:
 - **output:** what is saved or logged
 - **success criteria:** a test/demo command that proves the slice works
 
-If any of these are unclear, ask. A beginner does not need to know what details
-to provide; the agent must collect the missing brief proactively. Keep the intake
-small:
+If any of these are unclear, ask until the brief is complete enough that the
+agent does not need to guess. A beginner does not need to know what details to
+provide; the agent must collect the missing brief proactively.
+
+Start with a plain-language explanation before asking. Use comparisons a
+non-programmer can understand, such as:
+- **brief = ใบสั่งงาน** before a builder starts,
+- **first slice = กระดุมเม็ดแรก** that keeps the shirt aligned,
+- **proof gate = จุดตรวจงาน** before saying "done",
+- **organ = ชิ้นงาน/module** that can later connect to other pieces.
+
+Keep the intake small:
 - desired result,
 - who uses it,
 - first action they should be able to complete,
@@ -27,6 +36,10 @@ small:
 - constraints or "must not" rules,
 - external write / production / secret / auth risk,
 - proof command or demo that would count as success.
+
+Ask in short rounds (about 3-5 questions at a time). After each answer, say what
+is still missing instead of inventing it. When the brief is complete, summarize
+it back in plain language and ask for confirmation before coding.
 
 If there are several valid slices, return the options and mark one recommended
 path. Do not silently choose.
@@ -163,6 +176,8 @@ Use this format:
 ```text
 Decision point: <what must be decided>
 
+Plain-language frame: <one sentence using a beginner-friendly comparison>
+
 A. <safest/smallest proof> — best when...
 B. <fastest reversible spike> — best when...
 C. <fuller implementation> — best when...
@@ -170,6 +185,7 @@ D. <defer / shadow preview / read-only mapping> — best when...
 
 Recommended: <A/B/C/D>
 Why: <reason + tradeoff>
+Anti-drift proof: <how this choice avoids guessing, bloat, or hidden risk>
 ```
 
 Do not ask four choices for small reversible implementation details, formatting,

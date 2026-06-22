@@ -11,6 +11,9 @@ projects with a small, testable first slice before adding architecture.
 
 - Do not guess silently. If the purpose, user-visible slice, or proof is unclear,
   ask first.
+- If a beginner describes only the desired result, explain the missing brief in
+  plain language, use simple comparisons, and ask short rounds until no guessing
+  is needed.
 - If multiple valid paths exist, list the options and mark one recommended path.
 - For major decision points, follow `.claude/skills/organ-kit/reference/RULES.md`
   §10: offer four options, recommend one, and explain the tradeoff.
