@@ -63,6 +63,8 @@ python tools/graphify.py --strict
 5. **Log จริงเก็บ local (JSONL)** เร็วและค้นได้; ส่งเฉพาะสรุป/ผลงานไป ClickUp ผ่าน adapter
 6. **สารบัญ (graph) generate อัตโนมัติจากโค้ดเท่านั้น** ห้ามเขียนมือ — ดู `sandbox/tools/graphify.py`
 7. **ทุก external write ผ่าน SafetyGate** — dry-run preview + ขออนุมัติ (งานย้อนกลับได้ auto) — ดู `sandbox/shared/safety.py`
+8. **Skeleton-first + deferred work** — ดู canonical rule ที่ `.claude/skills/organ-kit/reference/RULES.md` §8
+9. **Two-tier DoD** (`learning-done` ≠ `implementation-done`) — ดู `.claude/skills/organ-kit/reference/RULES.md` §9
 
 ## Core utilities (frozen framework)
 

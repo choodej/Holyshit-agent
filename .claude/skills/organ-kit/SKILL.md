@@ -43,11 +43,9 @@ slice with a testable success criterion.
    deps, unguarded external writes). Never hand-write it, so it can never drift.
 7. **Every external write goes through a `SafetyGate`** (`shared/safety.py`):
    dry-run preview + explicit approval; reversible work auto-approves.
-8. **Skeleton-first inside an organ** (bone before tissue): skeleton → ports →
-   a failing test → domain logic → adapters → UI → optimization. Work that jumps
-   ahead is *deferred* (note why, finish the bone first), not invalid; learning
-   spikes are fine. System-wide, still build a vertical slice first. See
-   `reference/RULES.md` §8.
+8. **Skeleton-first + deferred work:** follow `reference/RULES.md` §8.
+9. **Two-tier DoD:** `learning-done` is not `implementation-done`; follow
+   `reference/RULES.md` §9.
 
 ## Built-in framework features
 - **Hexagonal OOP** scaffolding for every organ.
