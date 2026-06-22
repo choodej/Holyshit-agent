@@ -29,8 +29,18 @@ turning into one tangled blob.
    human to decide — never create-over silently. Always mark a recommended choice.
 5. **Real logs are local JSONL** (fast, queryable). External tools (ClickUp,
    Sheets) receive only *summaries* through a separate adapter — never raw logs.
-6. **The catalog/graph is auto-generated from code only** (`tools/build_graph.py`).
-   Never hand-write it, so it can never drift.
+6. **The catalog/graph is auto-generated from code only** (`tools/graphify.py`),
+   which also detects "shadows" (circular deps, data-domain overlaps, dangling
+   deps, unguarded external writes). Never hand-write it, so it can never drift.
+7. **Every external write goes through a `SafetyGate`** (`shared/safety.py`):
+   dry-run preview + explicit approval; reversible work auto-approves.
+
+## Built-in framework features
+- **Hexagonal OOP** scaffolding for every organ.
+- **Graphify** auto-mapping + shadow detection (`tools/graphify.py`, Mermaid output).
+- **Token optimization** for agent context/state (`tools/token_compressor.py`) —
+  never applied to the canonical audit log.
+- **Safety gates** for human-in-the-loop external writes (`shared/safety.py`).
 
 ## How to create a new organ
 
@@ -52,7 +62,7 @@ Then:
 cd sandbox
 python -m pytest organs/<organ_name>/tests -q     # should pass immediately
 python organs/<organ_name>/app.py --demo          # see the slice run
-python tools/build_graph.py                        # refresh CATALOG.md / graph.json
+python tools/graphify.py                           # refresh CATALOG.md / graph.json / graph.mmd
 ```
 
 ## What I (Claude) should do when asked to add an organ

@@ -10,6 +10,7 @@ sandbox/
     result.py             # Result/Outcome — ปลอดภัย ไม่ throw มั่ว, รองรับ "ถามก่อนสร้าง"
     ids.py                # สร้าง id + ตรวจซ้ำ
     ports.py              # base Port (ABC)
+    safety.py             # SafetyGate — กั้นทุก external write (dry-run + ขออนุมัติ)
   organs/
     registry/             # อวัยวะที่ 1 — สมัครสมาชิก
       domain/             # OOP core บริสุทธิ์ (ไม่รู้จัก telegram/db)
@@ -19,7 +20,8 @@ sandbox/
       app.py              # composition root — ต่อสายทุกชิ้นแล้วรัน slice
       manifest.json       # ข้อมูลอวัยวะ (graphify อ่านอันนี้)
   tools/
-    build_graph.py        # generate สารบัญ (CATALOG.md + graph.json) อัตโนมัติ
+    graphify.py           # generate สารบัญ (CATALOG.md/graph.json/graph.mmd) + shadow detection
+    token_compressor.py   # ย่อ context/state ให้ token น้อยลง (ไม่แตะ audit log)
 ```
 
 ## รัน
@@ -29,7 +31,8 @@ cd sandbox
 python -m pip install -r requirements.txt      # pytest (+ python-telegram-bot ถ้าจะต่อจริง)
 python -m pytest organs/registry/tests -q      # พิสูจน์อวัยวะทำงานจริง
 python organs/registry/app.py --demo           # รัน slice แบบ demo (ไม่ต้องมี token)
-python tools/build_graph.py                     # สร้างสารบัญอัตโนมัติ
+python -m pytest -q                             # เทสทั้งหมด (organs + core utilities)
+python tools/graphify.py                         # สร้างสารบัญ + ตรวจเงา (เพิ่ม --strict ให้ fail บน warning)
 ```
 
 ต่อ Telegram จริง: ตั้ง `TELEGRAM_BOT_TOKEN` แล้ว `python organs/registry/app.py --telegram`

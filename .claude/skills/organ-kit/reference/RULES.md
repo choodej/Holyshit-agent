@@ -40,6 +40,19 @@ map + index to find things fast and avoid duplicate work.
 **Its real downsides:** hand-maintained graphs go stale and become a second thing
 to maintain. **Fix:** generate it from `manifest.json` files only, in one command
 (or CI). The code is the single source of truth; the graph can never drift.
+`tools/graphify.py` also flags **shadows**: circular dependencies, two organs
+owning the same data domain, dependencies on missing organs, and external writes
+without a declared safety gate. Run with `--strict` to fail CI on any shadow.
+
+## 7. Safety gates for external writes
+**Why:** an agent should never silently hit a real database/API. Every external
+write is described as a `WriteIntent` and routed through a `SafetyGate`
+(`shared/safety.py`). `PolicyGate` auto-approves reversible work and requires
+explicit approval for irreversible work; `DryRunGate` previews and never writes.
+Blocked writes return `Result.NEEDS_DECISION`, reusing the same ask-before-create
+contract — no parallel concept.
+- Bounded, not bloated: enforced by a small `ExternalWriteAdapter` base class +
+  convention, not a heavy framework.
 
 ## What this kit deliberately does NOT do
 - No mandatory message broker, no mandatory DB, no mandatory cloud. Start with

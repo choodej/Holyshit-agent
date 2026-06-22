@@ -1,0 +1,12 @@
+graph TD
+  registry["registry\n(slice-proven)"]
+  registry__jsonl_member_repo(["jsonl_member_repo"])
+  registry -. MemberRepository .-> registry__jsonl_member_repo
+  registry__jsonl_logger(["jsonl_logger"])
+  registry -. Logger .-> registry__jsonl_logger
+  registry__clickup_logger(["clickup_logger"])
+  registry -. Logger .-> registry__clickup_logger
+  registry__telegram_inbound(["telegram_inbound"])
+  registry -. Inbound .-> registry__telegram_inbound
+  registry__demo_inbound(["demo_inbound"])
+  registry -. Inbound .-> registry__demo_inbound

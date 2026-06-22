@@ -1,10 +1,10 @@
-# CATALOG — สารบัญระบบ (auto-generated, ห้ามแก้มือ)
+# CATALOG — system index (auto-generated, do not edit by hand)
 
-อวัยวะทั้งหมด: 1
+Organs: 1
 
 ## registry — สมัครสมาชิก (Registration)
-- สถานะ: `slice-proven`  | เวอร์ชัน: `0.1.0`
-- ที่อยู่: `organs/registry`
-- หน้าที่: รับคำสั่งสมัครสมาชิกผ่านช่องทางใดก็ได้ ตรวจซ้ำ แล้วบันทึก + log
+- status: `slice-proven` | version: `0.1.0`
+- path: `organs/registry`
+- purpose: รับคำสั่งสมัครสมาชิกผ่านช่องทางใดก็ได้ ตรวจซ้ำ แล้วบันทึก + log
 - ports: MemberRepository, Logger, Inbound
-- ขึ้นกับ: (อิสระ)
+- depends on: (independent)
