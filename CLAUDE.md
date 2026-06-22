@@ -47,6 +47,7 @@ projects with a small, testable first slice before adding architecture.
 
 ```bash
 cd sandbox
+python3 tools/validate_manifests.py
 python3 tools/graphify.py --strict
 git diff --exit-code CATALOG.md graph.json graph.mmd
 ```
@@ -58,10 +59,12 @@ Run these before reporting success:
 ```bash
 cd sandbox
 python3 -m pytest -q
+python3 tools/validate_manifests.py
 python3 tools/graphify.py --strict
 git diff --exit-code CATALOG.md graph.json graph.mmd
 ```
 
-For detailed workflow rules, read `.claude/skills/organ-kit/SKILL.md` and load
+For repo-level agent discipline, read `AGENTS.md`. For detailed workflow rules,
+read `.claude/skills/organ-kit/SKILL.md` and load
 `.claude/skills/organ-kit/reference/RULES.md` when the reasoning behind a rule
 matters.

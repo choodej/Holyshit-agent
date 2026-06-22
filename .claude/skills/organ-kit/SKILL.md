@@ -81,6 +81,7 @@ Then:
 cd sandbox
 python3 -m pytest organs/<organ_name>/tests -q    # should pass immediately
 python3 organs/<organ_name>/app.py --demo         # see the slice run
+python3 tools/validate_manifests.py               # manifest/checklist proof
 python3 tools/graphify.py                          # refresh CATALOG.md / graph.json / graph.mmd
 ```
 
@@ -104,7 +105,8 @@ Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
 `graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
 `safety_gate` for shadow detection, and reports `phase` as the organ's
 skeleton-first progress marker. Keep each organ's `CHECKLIST.md` and
-`manifest.json` phase in sync.
+`manifest.json` phase in sync. Run `tools/validate_manifests.py` before
+`graphify.py` so schema/checklist drift fails before catalog generation.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).

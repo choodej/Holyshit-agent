@@ -27,6 +27,9 @@ jobs:
       - name: Run tests
         run: python -m pytest -q
 
+      - name: Validate organ manifests
+        run: python tools/validate_manifests.py
+
       - name: Run strict graph check
         run: python tools/graphify.py --strict
 

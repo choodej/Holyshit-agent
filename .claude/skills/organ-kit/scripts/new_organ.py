@@ -112,6 +112,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  cd {sandbox_root.relative_to(root)}")
     print(f"  python -m pytest organs/{organ}/tests -q")
     print(f"  python organs/{organ}/app.py --demo")
+    print("  python tools/validate_manifests.py")
     print(f"  python tools/graphify.py")
     return 0
 
