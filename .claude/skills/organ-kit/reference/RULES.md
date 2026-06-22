@@ -16,8 +16,20 @@ Before coding, define:
 - **output:** what is saved or logged
 - **success criteria:** a test/demo command that proves the slice works
 
-If any of these are unclear, ask. If there are several valid slices, return the
-options and mark one recommended path. Do not silently choose.
+If any of these are unclear, ask. A beginner does not need to know what details
+to provide; the agent must collect the missing brief proactively. Keep the intake
+small:
+- desired result,
+- who uses it,
+- first action they should be able to complete,
+- input needed for that action,
+- what should be saved/logged,
+- constraints or "must not" rules,
+- external write / production / secret / auth risk,
+- proof command or demo that would count as success.
+
+If there are several valid slices, return the options and mark one recommended
+path. Do not silently choose.
 
 Good first slice:
 `submit request -> validate/decide category -> save JSONL record -> emit audit log`
