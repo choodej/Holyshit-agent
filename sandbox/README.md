@@ -22,7 +22,7 @@ sandbox/
       manifest.json       # ข้อมูลอวัยวะ (graphify อ่านอันนี้)
   tools/
     graphify.py           # generate สารบัญ (CATALOG.md/graph.json/graph.mmd) + shadow detection
-    token_compressor.py   # ย่อ context/state ให้ token น้อยลง (ไม่แตะ audit log)
+    token_compressor.py   # ย่อ handoff state ให้ agent ถัดไป (ไม่แตะ audit log)
 ```
 
 ## รัน
@@ -31,9 +31,13 @@ sandbox/
 cd sandbox
 python3 -m pip install -r requirements.txt     # pytest (+ python-telegram-bot ถ้าจะต่อจริง)
 python3 -m pytest organs/registry/tests -q     # พิสูจน์อวัยวะทำงานจริง
-python3 organs/registry/app.py --demo          # รัน slice แบบ demo (ไม่ต้องมี token)
+python3 organs/registry/app.py --demo          # รัน slice + ย่อ handoff state ให้ agent ถัดไป
 python3 -m pytest -q                            # เทสทั้งหมด (organs + core utilities)
 python3 tools/graphify.py                        # สร้างสารบัญ + ตรวจเงา (เพิ่ม --strict ให้ fail บน warning)
 ```
 
 ต่อ Telegram จริง: ตั้ง `TELEGRAM_BOT_TOKEN` แล้ว `python3 organs/registry/app.py --telegram`
+
+`token_compressor.py` ใช้หลัง slice ทำงานแล้วเท่านั้น: log จริงยังเก็บเป็น JSONL เต็ม
+ใน `.data/registry.log.jsonl`; demo จะย่อสำเนา state สำหรับส่งต่อ agent ถัดไปให้ดู
+เพื่อประหยัด context โดยไม่ทำ audit log เสียรูป.

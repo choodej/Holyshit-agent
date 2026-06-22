@@ -21,11 +21,12 @@ python3 -m venv .venv
 python -m pip install -r sandbox/requirements.txt
 cd sandbox
 python -m pytest -q
-python organs/registry/app.py --demo
+python organs/registry/app.py --demo          # includes compressed next-agent handoff state
 python tools/graphify.py --strict
 ```
 
-ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, demo slice รันได้, และ graph ไม่มี shadow.
+ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, demo slice รันได้, handoff state ถูกย่อ,
+และ graph ไม่มี shadow.
 
 ถ้าจะสร้าง organ แรกของตัวเอง:
 
@@ -70,11 +71,11 @@ python tools/graphify.py --strict
 | `sandbox/shared/safety.py` | `SafetyGate` (PolicyGate/DryRunGate/...) + `ExternalWriteAdapter` กั้นทุกการเขียนนอก |
 | `sandbox/manifest.schema.json` | schema ของ `manifest.json`; ระบุ field ที่ graphify ใช้จับ shadow |
 | `sandbox/tools/graphify.py` | สารบัญ + Mermaid + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
-| `sandbox/tools/token_compressor.py` | ย่อ JSON/log เป็น state แน่นๆ (lossless / digest) — สำหรับ context ไม่ใช่ audit log |
+| `sandbox/tools/token_compressor.py` | ย่อ state สำหรับส่งต่อ agent ถัดไป — ใช้กับ context เท่านั้น ไม่แตะ audit log |
 
 ## เส้นแรกที่พิสูจน์แล้ว (vertical slice)
 
-`Register (สมัครสมาชิก) → รับคำสั่งผ่าน Inbound (Telegram) → เขียน Log (JSONL)`
+`Register (สมัครสมาชิก) → รับคำสั่งผ่าน Inbound (Telegram) → เขียน Log (JSONL) → ย่อ handoff state ให้ agent ถัดไป`
 
 ดู `sandbox/README.md`
 

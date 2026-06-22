@@ -29,6 +29,8 @@ projects with a small, testable first slice before adding architecture.
   Do not hand-write the scaffold.
 - External writes must go through `sandbox/shared/safety.py`.
 - Keep raw logs local as JSONL. External tools get summaries through adapters.
+- Use `sandbox/tools/token_compressor.py` only for next-agent context/state
+  handoff after a slice runs. Never compress the canonical JSONL audit log.
 
 ## Generated Graph Contract
 

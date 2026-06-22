@@ -56,6 +56,11 @@ slice with a testable success criterion.
   never applied to the canonical audit log.
 - **Safety gates** for human-in-the-loop external writes (`shared/safety.py`).
 
+## Agent handoff state
+Use `tools/token_compressor.py` after a slice has run and before passing context
+to another agent. Compress a copy of the state or event digest only. Never
+compress the canonical JSONL audit log.
+
 ## How to create a new organ
 
 Prefer the deterministic generator (works with or without me):
