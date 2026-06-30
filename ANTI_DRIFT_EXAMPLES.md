@@ -132,6 +132,30 @@ Why: proves value before touching production/auth/secrets.
 
 ใช้ `RULES.md` §10 ก่อนตัดสินใจใหญ่ทุกครั้ง.
 
+**ไล่ phase เพราะเอกสารดูพร้อม**
+
+ผิด:
+
+```text
+Phase 2 checklist exists, release note exists, and graph is clean, so start Phase 3.
+```
+
+ผลเสีย: control plane เดินหน้า แต่ runtime artifact chain ยังอาจพิสูจน์ไม่ได้
+ว่า input ไหนเข้ามา, domain ตัดสินใจอะไร, save/log อะไร, และ command ไหนยืนยันผล.
+
+ถูก:
+
+```text
+Capability Reality Check:
+- current runtime state: demo/test command that passes
+- artifact chain: input -> domain decision -> saved/logged result -> proof
+- future intent: docs/phase notes not yet implemented
+- blocker: deferred items that prevent implementation-done
+```
+
+ถ้าของจริงยังไม่ตามเอกสาร ให้ลด scope กลับไป proof เล็กสุดตาม `RULES.md` §9
+ก่อนเพิ่ม phase/release/promote.
+
 ## ถูกทาง
 
 ก่อนบอกว่างานเสร็จ ให้ผ่านประตูเดียวนี้:

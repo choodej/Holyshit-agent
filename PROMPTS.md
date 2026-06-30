@@ -96,6 +96,8 @@ python tools/check.py
 - ใช้ generator เท่านั้นเมื่อสร้าง organ ใหม่
 - ทำ skeleton-first ตาม RULES.md §8
 - learning-done ไม่เท่ากับ implementation-done ตาม RULES.md §9
+- ก่อนเพิ่ม phase/release/promote/done ให้ทำ Capability Reality Check ตาม RULES.md §9:
+  พิสูจน์ artifact chain จริงก่อน ไม่ไล่ phase จากเอกสารอย่างเดียว
 - external write ต้องผ่าน SafetyGate และ manifest ต้องประกาศ external_writes + safety_gate: true
 - ห้ามแก้ graph artifacts ด้วยมือ ให้ graphify generate เท่านั้น
 
@@ -142,14 +144,19 @@ python tools/check.py
 
 1. เทียบผลลัพธ์กับ brief/ตัวเลือกที่ผม confirm ไว้
 2. ตรวจว่าแก้เฉพาะ scope ที่ตกลงกัน ไม่มีไฟล์หรือกฎใหม่ที่ไม่เกี่ยว
-3. ตรวจว่าไม่มี graph artifact ที่แก้มือ
-4. ตรวจว่าไม่มี TODO/deferred ที่ต้องปิดก่อนบอกว่า implementation-done
-5. รัน:
+3. ถ้ามีคำว่า phase/release/promote/done ให้ทำ Capability Reality Check ตาม RULES.md §9:
+   - runtime state ตอนนี้คืออะไร
+   - artifact chain จริงคือ input -> domain decision -> saved/logged result -> proof อะไร
+   - doc/phase ไหนเป็นแค่ future intent
+   - blocker ไหนทำให้ยังไม่ implementation-done
+4. ตรวจว่าไม่มี graph artifact ที่แก้มือ
+5. ตรวจว่าไม่มี TODO/deferred ที่ต้องปิดก่อนบอกว่า implementation-done
+6. รัน:
    cd sandbox
    python tools/check.py
-6. ถ้า fail หรือยังไม่ครบ ให้แก้จนผ่านก่อน
-7. ถ้าแก้ไม่ได้ ให้บอก blocker ชัดๆ ห้ามบอกว่าเสร็จ
-8. สรุปผลสุดท้าย: ทำอะไร, ผ่าน proof อะไร, ยังเหลือ risk อะไร
+7. ถ้า fail หรือยังไม่ครบ ให้แก้จนผ่านก่อน
+8. ถ้าแก้ไม่ได้ ให้บอก blocker ชัดๆ ห้ามบอกว่าเสร็จ
+9. สรุปผลสุดท้าย: ทำอะไร, ผ่าน proof อะไร, ยังเหลือ risk อะไร
 ```
 
 ## 1. Human Decision Gate
@@ -350,4 +357,33 @@ python tools/check.py
 - shadow risk: มี doc/code/manifest ซ้ำหรือ drift ตรงไหน
 
 ถ้าพบ decision point ให้เสนอ 4 ทางเลือกตาม RULES.md §10 พร้อม recommended
+```
+
+## 11. Capability Reality Check / phase audit
+
+```text
+ช่วยทำ Capability Reality Check ตาม RULES.md §9 สำหรับงาน <เรื่อง>
+
+เป้าหมายคือจับปัญหาแบบ:
+- Control Plane Drift: เอกสาร/gate/phase เดินนำของจริง
+- Process Overhang: พิธีเยอะกว่างานที่ execute จริง
+- Spec-Implementation Skew: spec ไปไกลกว่า runtime state
+- Ceremony Ahead of Capability: release/process นำหน้าความสามารถจริง
+- Phase Chasing: ไล่เลข phase โดยไม่ถามว่า state จริงอยู่ตรงไหน
+
+ห้ามแก้ไฟล์ก่อน ให้ audit แบบอ่านอย่างเดียวแล้วตอบ:
+1. Runtime state ตอนนี้คืออะไร และ command ไหนพิสูจน์ได้
+2. Artifact chain จริงมีครบไหม:
+   input -> domain decision -> saved/logged result -> proof
+3. Doc/phase/checklist ไหนพูดถึงอนาคต แต่ยังไม่มี implementation จริง
+4. อะไรเป็น learning-done, อะไรเป็น implementation-done, อะไรต้อง deferred
+5. ถ้าจะไปต่อ มี 4 ทางเลือกตาม RULES.md §10 พร้อม recommended:
+   A. ลด scope กลับไป proof เล็กสุด
+   B. ทำ reversible spike เพื่อเรียนรู้
+   C. ทำ implementation ต่อใน sandbox
+   D. หยุดที่ shadow preview/read-only ก่อน
+6. Anti-drift proof: ต้องรันหรือเพิ่ม test/harness/manifest/check อะไร
+
+ถ้าพบว่าเอกสารเดินนำของจริง ให้บอกชัดๆ ว่า "ยังไม่ควรขึ้น phase/release/promote"
+และเสนอ slice ที่เล็กที่สุดที่ทำให้ของจริงตามทันเอกสาร
 ```

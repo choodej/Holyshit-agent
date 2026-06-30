@@ -45,7 +45,8 @@ slice with a testable success criterion.
    dry-run preview + explicit approval; reversible work auto-approves.
 8. **Skeleton-first + deferred work:** follow `reference/RULES.md` §8.
 9. **Two-tier DoD:** `learning-done` is not `implementation-done`; follow
-   `reference/RULES.md` §9.
+   `reference/RULES.md` §9, including the Capability Reality Check before
+   phase/release/promote/done claims.
 10. **Human Decision Gate:** for major direction-setting choices, follow
    `reference/RULES.md` §10: four options, one recommendation, clear tradeoff.
 
@@ -55,6 +56,8 @@ slice with a testable success criterion.
 - **Token optimization** for agent context/state (`tools/token_compressor.py`) —
   never applied to the canonical audit log.
 - **Safety gates** for human-in-the-loop external writes (`shared/safety.py`).
+- **Capability reality check** before phase/release/promote/done claims: prove
+  the runtime artifact chain before adding more process.
 
 ## Agent handoff state
 Use `tools/token_compressor.py` after a slice has run and before passing context
@@ -101,7 +104,9 @@ python tools/check.py                             # full proof gate
    database, queue, dashboard, or optimization until the slice passes.
 5. Run the demo and `python tools/check.py`. If anything fails, keep looping on
    that success criterion before widening scope.
-6. Review the final diff against the confirmed brief before reporting success.
+6. If the work mentions phase, release, promote, production, or done, run the
+   Capability Reality Check in `reference/RULES.md` §9 before making the claim.
+7. Review the final diff against the confirmed brief before reporting success.
    If anything is incomplete or out of scope, fix it or report the blocker.
 
 ## Manifest contract

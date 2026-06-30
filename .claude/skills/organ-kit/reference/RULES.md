@@ -157,6 +157,25 @@ Every organ keeps a local `DEFERRED.md` beside `CHECKLIST.md`. Use it only for
 work intentionally delayed because it belongs to a later phase or needs a real
 trigger. Do not use it as a general wishlist.
 
+Before adding a phase, release ceremony, promotion note, or "done" claim, run a
+**Capability Reality Check**. This catches the same failure mode people may call
+control-plane drift, process overhang, spec-implementation skew, ceremony ahead
+of capability, or phase chasing: the docs/gates/phase labels move faster than
+the artifact chain that actually runs.
+
+Reality check questions:
+- What is the current runtime state, and which command proves it?
+- What exact artifact chain exists now: input -> domain decision ->
+  saved/logged result -> proof?
+- Which docs or phase labels describe future intent rather than current
+  capability?
+- Which checklist/deferred items block implementation-done or promotion?
+- Does `python tools/check.py` prove the claim, or only prove the control plane?
+
+If the artifact chain is not proven, do not add another phase to chase. Mark the
+work as learning-done or deferred, reduce the slice, and return to the missing
+runtime proof.
+
 Before reporting success, do one final review loop:
 - compare the final diff against the user's original request and confirmed brief,
 - check for unintended files, scope creep, duplicate rules, and manual graph edits,

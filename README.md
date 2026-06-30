@@ -83,7 +83,7 @@ python tools/check.py
 6. **สารบัญ (graph) generate อัตโนมัติจากโค้ดเท่านั้น** ห้ามเขียนมือ — ดู `sandbox/tools/graphify.py`
 7. **ทุก external write ผ่าน SafetyGate** — dry-run preview + ขออนุมัติ (งานย้อนกลับได้ auto) — ดู `sandbox/shared/safety.py`
 8. **Skeleton-first + deferred work** — ดู canonical rule ที่ `.claude/skills/organ-kit/reference/RULES.md` §8
-9. **Two-tier DoD** (`learning-done` ≠ `implementation-done`) — ดู `.claude/skills/organ-kit/reference/RULES.md` §9
+9. **Two-tier DoD + Capability Reality Check** (`learning-done` ≠ `implementation-done`) — ดู `.claude/skills/organ-kit/reference/RULES.md` §9
 10. **Human Decision Gate** — decision ใหญ่ต้องถามพร้อม 4 ทางเลือก + recommended — ดู `RULES.md` §10
 
 ## Core utilities (frozen framework)
