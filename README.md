@@ -43,7 +43,8 @@ python organs/registry/app.py --demo          # includes compressed next-agent h
 ```
 
 ผ่านแล้วแปลว่าเครื่องคุณพร้อม: tests เขียว, doc ไม่ drift, manifest/checklist ไม่ drift,
-graph ไม่มี shadow, demo slice รันได้, และ handoff state ถูกย่อ.
+external-write marker ไม่ซ่อนนอก manifest, graph ไม่มี shadow, demo slice รันได้,
+และ handoff state ถูกย่อ.
 
 ถ้าจะสร้าง organ แรกของตัวเอง:
 
@@ -80,7 +81,7 @@ python tools/check.py
 4. **ปลอดภัยแต่ไม่ช้า** — งานที่ย้อนกลับได้ทำเลย; งานที่ทำลายของเดิม / id ซ้ำ /
    ชื่อซ้ำ / กระทบหลายแผนก → คืน "ทางเลือก" ให้คนตัดสินใจก่อน (ไม่สร้างมั่ว)
 5. **Log จริงเก็บ local (JSONL)** เร็วและค้นได้; ส่งเฉพาะสรุป/ผลงานไป ClickUp ผ่าน adapter
-6. **สารบัญ (graph) generate อัตโนมัติจากโค้ดเท่านั้น** ห้ามเขียนมือ — ดู `sandbox/tools/graphify.py`
+6. **สารบัญ (graph) generate อัตโนมัติจาก manifest contract** ห้ามเขียนมือ — ดู `sandbox/tools/graphify.py`
 7. **ทุก external write ผ่าน SafetyGate** — dry-run preview + ขออนุมัติ (งานย้อนกลับได้ auto) — ดู `sandbox/shared/safety.py`
 8. **Skeleton-first + deferred work** — ดู canonical rule ที่ `.claude/skills/organ-kit/reference/RULES.md` §8
 9. **Two-tier DoD + Capability Reality Check** (`learning-done` ≠ `implementation-done`) — ดู `.claude/skills/organ-kit/reference/RULES.md` §9
@@ -94,8 +95,8 @@ python tools/check.py
 | `sandbox/tools/check.py` | ประตูเดียวก่อนบอกว่างานเสร็จ: tests + doc lint + manifest + graph guard |
 | `sandbox/tools/doc_lint.py` | จับ rule-like docs ที่ไม่ชี้ canonical `RULES.md` หรือไม่ชี้ check gate |
 | `sandbox/manifest.schema.json` | schema ของ `manifest.json`; ระบุ field ที่ graphify ใช้จับ shadow |
-| `sandbox/tools/validate_manifests.py` | ตรวจ `manifest.json` + `CHECKLIST.md` phase ก่อน graphify/CI |
-| `sandbox/tools/graphify.py` | สารบัญ + Mermaid + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
+| `sandbox/tools/validate_manifests.py` | ตรวจ `manifest.json` + `CHECKLIST.md` phase + external-write marker ก่อน graphify/CI |
+| `sandbox/tools/graphify.py` | สารบัญ + Mermaid จาก manifest contract + shadow detection (cycle/overlap/dangling/unguarded-write); `--strict` สำหรับ CI |
 | `sandbox/tools/token_compressor.py` | ย่อ state สำหรับส่งต่อ agent ถัดไป — ใช้กับ context เท่านั้น ไม่แตะ audit log |
 | `sandbox/organs/*/CHECKLIST.md` | checklist ของ skeleton-first; sync กับ `manifest.json.phase` |
 

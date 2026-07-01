@@ -38,9 +38,10 @@ slice with a testable success criterion.
    human to decide — never create-over silently. Always mark a recommended choice.
 5. **Real logs are local JSONL** (fast, queryable). External tools (ClickUp,
    Sheets) receive only *summaries* through a separate adapter — never raw logs.
-6. **The catalog/graph is auto-generated from code only** (`tools/graphify.py`),
+6. **The catalog/graph is auto-generated from manifest contracts** (`tools/graphify.py`),
    which also detects "shadows" (circular deps, data-domain overlaps, dangling
-   deps, unguarded external writes). Never hand-write it, so it can never drift.
+   deps, unguarded external writes). Never hand-write graph artifacts; keep
+   manifest files synced with code.
 7. **Every external write goes through a `SafetyGate`** (`shared/safety.py`):
    dry-run preview + explicit approval; reversible work auto-approves.
 8. **Skeleton-first + deferred work:** follow `reference/RULES.md` §8.
@@ -114,8 +115,8 @@ Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
 `graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
 `safety_gate` for shadow detection, and reports `phase` as the organ's
 skeleton-first progress marker. Keep each organ's `CHECKLIST.md` and
-`manifest.json` phase in sync. Run `python tools/check.py` so
-schema/checklist drift fails before catalog generation.
+   `manifest.json` phase in sync. Run `python tools/check.py` so
+schema/checklist drift and declared external-write drift fail before catalog generation.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).

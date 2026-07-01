@@ -85,8 +85,10 @@ Raw logs go to local JSONL (fast). A separate decorator adapter forwards only
 **Why a graph helps:** in a multi-organ/multi-repo system you need a dependency
 map + index to find things fast and avoid duplicate work.
 **Its real downsides:** hand-maintained graphs go stale and become a second thing
-to maintain. **Fix:** generate it from `manifest.json` files only, in one command
-(or CI). The code is the single source of truth; the graph can never drift.
+to maintain. **Fix:** generate it from `manifest.json` contract files only, in
+one command (or CI). The manifest is the source for the graph; it must stay
+synced with code. `tools/validate_manifests.py` catches the cheap, important
+drift cases before graphify runs.
 `tools/graphify.py` also flags **shadows**: circular dependencies, two organs
 owning the same data domain, dependencies on missing organs, and external writes
 without a declared safety gate. Run with `--strict` to fail CI on any shadow.

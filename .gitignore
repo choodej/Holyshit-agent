@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.DS_Store
 # data ที่ runtime สร้าง (log/สมาชิก) ไม่ commit
 sandbox/organs/*/.data/

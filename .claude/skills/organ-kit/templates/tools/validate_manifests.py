@@ -17,6 +17,7 @@ ORGANS = SANDBOX / "organs"
 SCHEMA = SANDBOX / "manifest.schema.json"
 
 _CHECKLIST_PHASE_RE = re.compile(r"^Current phase: `([^`]+)`$", re.MULTILINE)
+_EXTERNAL_WRITE_MARKERS = ("ExternalWriteAdapter", "WriteIntent(", ".guarded(")
 
 
 def _schema() -> dict[str, Any]:
@@ -70,6 +71,23 @@ def checklist_phase(checklist: Path) -> str | None:
     return match.group(1) if match else None
 
 
+def external_write_markers(organ_dir: Path) -> list[str]:
+    """Return adapter files that look like SafetyGate-backed external writes.
+
+    This is deliberately narrow. It checks this repo's convention, not every
+    possible Python network/file write.
+    """
+    adapters_dir = organ_dir / "adapters"
+    if not adapters_dir.exists():
+        return []
+    marked: list[str] = []
+    for path in sorted(adapters_dir.rglob("*.py")):
+        text = path.read_text(encoding="utf-8")
+        if any(marker in text for marker in _EXTERNAL_WRITE_MARKERS):
+            marked.append(str(path.relative_to(organ_dir)))
+    return marked
+
+
 def validate_manifest_data(data: dict[str, Any], *, organ_dir: Path, schema: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     props = schema["properties"]
@@ -120,6 +138,20 @@ def validate_manifest_data(data: dict[str, Any], *, organ_dir: Path, schema: dic
                 errors.append(
                     f"{organ_dir.name}/manifest.json: external_writes requires safety_gate: true"
                 )
+
+    write_markers = external_write_markers(organ_dir)
+    if write_markers:
+        marker_list = ", ".join(write_markers)
+        if not data.get("external_writes"):
+            errors.append(
+                f"{organ_dir.name}/manifest.json: adapter code uses ExternalWriteAdapter/WriteIntent "
+                f"but external_writes is empty or missing ({marker_list})"
+            )
+        if data.get("safety_gate") is not True:
+            errors.append(
+                f"{organ_dir.name}/manifest.json: adapter code uses ExternalWriteAdapter/WriteIntent "
+                f"but safety_gate: true is missing ({marker_list})"
+            )
 
     adapters = data.get("adapters")
     if isinstance(adapters, dict):

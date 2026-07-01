@@ -2,6 +2,10 @@
 
 Every organ has `manifest.json`. `graphify.py` reads these files to build
 `CATALOG.md`, `graph.json`, `graph.mmd`, and to detect shadows.
+The manifest is a contract, not a magic scanner: keep it synced with code.
+`python tools/check.py` runs `validate_manifests.py` before graphify, including a
+narrow guard that catches adapters using `ExternalWriteAdapter` / `WriteIntent`
+without declaring `external_writes` and `safety_gate`.
 
 Use `sandbox/manifest.schema.json` for editor help. In an organ manifest, set:
 
@@ -42,6 +46,10 @@ Use `sandbox/manifest.schema.json` for editor help. In an organ manifest, set:
 - `depends_on`: circular dependencies and missing organs
 - `owns_data`: two organs claiming the same data domain, case-insensitive
 - `external_writes` + `safety_gate`: external writes without a safety gate
+
+`python tools/validate_manifests.py` also checks the manifest against the organ's
+local files: the organ folder name, `CHECKLIST.md` phase, and the repo convention
+that external write adapters use `ExternalWriteAdapter` / `WriteIntent`.
 
 If an organ writes to an external API/database/third-party service, declare both:
 

@@ -87,6 +87,43 @@ def test_requires_safety_gate_for_external_writes(tmp_path):
     assert any("safety_gate: true" in error for error in errors)
 
 
+def test_rejects_external_write_adapter_not_declared_in_manifest(tmp_path):
+    manifest = _valid_manifest()
+    organ_dir = _organ_dir(tmp_path)
+    adapters = organ_dir / "adapters"
+    adapters.mkdir()
+    (adapters / "clickup_logger.py").write_text(
+        "from shared.safety import ExternalWriteAdapter\n"
+        "class ClickUpLogger(ExternalWriteAdapter):\n"
+        "    pass\n",
+        encoding="utf-8",
+    )
+
+    errors = validate_manifest_data(manifest, organ_dir=organ_dir, schema=_schema())
+
+    assert any("external_writes" in error and "ExternalWriteAdapter" in error for error in errors)
+    assert any("safety_gate: true" in error and "ExternalWriteAdapter" in error for error in errors)
+
+
+def test_accepts_declared_external_write_adapter(tmp_path):
+    manifest = _valid_manifest()
+    manifest["external_writes"] = ["clickup.create_task"]
+    manifest["safety_gate"] = True
+    organ_dir = _organ_dir(tmp_path)
+    adapters = organ_dir / "adapters"
+    adapters.mkdir()
+    (adapters / "clickup_logger.py").write_text(
+        "from shared.safety import ExternalWriteAdapter\n"
+        "class ClickUpLogger(ExternalWriteAdapter):\n"
+        "    pass\n",
+        encoding="utf-8",
+    )
+
+    errors = validate_manifest_data(manifest, organ_dir=organ_dir, schema=_schema())
+
+    assert errors == []
+
+
 def test_rejects_checklist_phase_drift(tmp_path):
     errors = validate_manifest_data(
         _valid_manifest(), organ_dir=_organ_dir(tmp_path, phase="skeleton"), schema=_schema()

@@ -1,8 +1,9 @@
 """graphify — generate the system map from every organ's manifest.json, and
 detect "shadows" (overlaps / circular deps / dangling deps).
 
-Rule: the catalog/graph is generated from code only, never hand-written, so it
-cannot drift. Outputs:
+Rule: the catalog/graph is generated from organ manifest contracts, never
+hand-written. Keep each manifest synced with code; `tools/validate_manifests.py`
+guards the parts this framework can check cheaply. Outputs:
   - CATALOG.md   (human index)
   - graph.json   (machine graph)
   - graph.mmd    (Mermaid.js diagram)
