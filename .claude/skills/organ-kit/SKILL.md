@@ -38,6 +38,7 @@ slice with a testable success criterion.
    human to decide — never create-over silently. Always mark a recommended choice.
 5. **Real logs are local JSONL** (fast, queryable). External tools (ClickUp,
    Sheets) receive only *summaries* through a separate adapter — never raw logs.
+   Outbound summaries still count as external writes and follow rule 7.
 6. **The catalog/graph is auto-generated from manifest contracts** (`tools/graphify.py`),
    which also detects "shadows" (circular deps, data-domain overlaps, dangling
    deps, unguarded external writes). Never hand-write graph artifacts; keep

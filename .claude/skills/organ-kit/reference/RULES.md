@@ -79,6 +79,7 @@ acting.
 **Why:** ClickUp/Sheets are not log stores — slow, rate-limited, not queryable.
 Raw logs go to local JSONL (fast). A separate decorator adapter forwards only
 *reportable* events (e.g. "created") to ClickUp. Swap it in without touching domain.
+That outbound summary is still an external write, so it must follow rule 7.
 - Downside avoided: one slow external call per log line dragging the whole system.
 
 ## 6. Auto-generated catalog (graphify)
