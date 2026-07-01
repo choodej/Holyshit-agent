@@ -44,7 +44,9 @@ slice with a testable success criterion.
    deps, unguarded external writes). Never hand-write graph artifacts; keep
    manifest files synced with code.
 7. **Every external write goes through a `SafetyGate`** (`shared/safety.py`):
-   dry-run preview + explicit approval; reversible work auto-approves.
+   dry-run preview + explicit approval; reversible work auto-approves. Do not
+   call raw clients such as `requests.post`, `httpx`, DB/SaaS SDK writes, or
+   webhooks without `ExternalWriteAdapter`, `WriteIntent`, and `.guarded(...)`.
 8. **Skeleton-first + deferred work:** follow `reference/RULES.md` §8.
 9. **Two-tier DoD:** `learning-done` is not `implementation-done`; follow
    `reference/RULES.md` §9, including the Capability Reality Check before

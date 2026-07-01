@@ -38,6 +38,9 @@ projects with a small, testable first slice before adding architecture.
 - Follow `.claude/skills/organ-kit/reference/RULES.md` §8 for skeleton-first,
   §9 for two-tier DoD, and §10 for human decision gates.
 - External writes must go through `sandbox/shared/safety.py`.
+- Do not make raw external writes from adapters. No direct `requests.post`,
+  `httpx`, DB/SaaS SDK write, webhook send, or customer-data write without
+  `ExternalWriteAdapter`, `WriteIntent`, `.guarded(...)`, and manifest visibility.
 - Keep raw logs local as JSONL. External tools get summaries through adapters.
 - Use `sandbox/tools/token_compressor.py` only for next-agent context/state
   handoff after a slice runs. Never compress the canonical JSONL audit log.

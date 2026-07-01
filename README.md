@@ -1,4 +1,4 @@
-# ohlyshit — First-Button Project Skill for AI Agents
+# Holyshit-agent — First-Button Project Skill for AI Agents
 
 กัน AI coding พาโปรเจคหลงทาง บวม และเขียนไม่จบ โดยบังคับให้เริ่มจาก
 **งานเล็ก 1 ชิ้นที่พิสูจน์ได้จริง** ก่อนสร้าง architecture ใหญ่.
@@ -32,8 +32,8 @@
 ## Quickstart 60 วินาที
 
 ```bash
-git clone https://github.com/choodej/ohlyshit.git
-cd ohlyshit
+git clone https://github.com/choodej/Holyshit-agent.git
+cd Holyshit-agent
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r sandbox/requirements.txt

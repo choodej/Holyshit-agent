@@ -238,6 +238,7 @@ python tools/check.py
 ถ้าได้รับอนุมัติให้ทำ:
 - ใช้ ExternalWriteAdapter + SafetyGate จาก sandbox/shared/safety.py
 - ห่อ write ด้วย WriteIntent + self.guarded(...)
+- ห้ามยิง raw external write ตรงๆ เช่น requests.post/httpx/DB หรือ SaaS SDK write/webhook
 - default เป็น DryRunGate หรือ preview path ที่ไม่เขียนจริง
 - log จริงเก็บ local JSONL
 - ส่งออกนอกแค่ summary/reportable event

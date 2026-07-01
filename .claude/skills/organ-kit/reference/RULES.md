@@ -101,6 +101,13 @@ write is described as a `WriteIntent` and routed through a `SafetyGate`
 explicit approval for irreversible work; `DryRunGate` previews and never writes.
 Blocked writes return `Result.NEEDS_DECISION`, reusing the same ask-before-create
 contract — no parallel concept.
+
+Do not make raw external writes from adapters. Direct calls to production
+databases, third-party APIs, SaaS SDKs, `requests.post`, `httpx`, webhook sends,
+or customer-data writes must be wrapped in `ExternalWriteAdapter` +
+`WriteIntent` + `.guarded(...)` and declared in `manifest.json`. Local JSONL
+audit/proof files are allowed by rule 5; external writes are not.
+
 - Bounded, not bloated: enforced by a small `ExternalWriteAdapter` base class +
   convention, not a heavy framework.
 

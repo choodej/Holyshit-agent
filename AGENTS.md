@@ -85,6 +85,7 @@ Stop and ask if:
 - a rule duplicates another rule,
 - a rule claims a gate exists but no code/test/command proves it,
 - an adapter or external write path appears without manifest visibility,
+- raw external write code appears without `ExternalWriteAdapter` + `WriteIntent`,
 - V2/spec/learning knowledge is being treated as runtime approval,
 - goal, feature priority, production/auth/secret/write path, learning promotion,
   or UX/business/legal/security context requires human judgment,

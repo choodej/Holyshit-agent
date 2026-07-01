@@ -69,6 +69,32 @@ Add ClickUp/Sheets/DB write code directly in an adapter and skip manifest update
 
 เขียนผ่าน `sandbox/shared/safety.py` และให้ manifest เปิดเผย write path.
 
+**ยิง external API ตรงใน adapter**
+
+ผิด:
+
+```python
+requests.post("https://api.example.com/tasks", json=payload)
+```
+
+ผลเสีย: SafetyGate และ manifest มองไม่เห็น write path; dry-run/approval ถูกข้าม.
+
+ถูก:
+
+```python
+intent = WriteIntent(action="provider.create_task", target="tasks", payload=payload)
+result = self.guarded(intent, lambda: self._post(intent))
+```
+
+แล้วประกาศใน `manifest.json`:
+
+```json
+{
+  "external_writes": ["provider.create_task"],
+  "safety_gate": true
+}
+```
+
 **นับ spike ว่าเสร็จ**
 
 ผิด:
