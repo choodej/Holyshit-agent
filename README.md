@@ -55,6 +55,18 @@ cd sandbox
 python tools/check.py
 ```
 
+## Day-1 path: มือใหม่ทำแค่นี้ก่อน
+
+ยังไม่ต้องจำกฎทั้งชุดในวันแรก ให้เดินแค่แกนนี้:
+
+1. **เลือก first slice** — ผู้ใช้ทำอะไรได้ 1 อย่าง, รับ input อะไร, domain ตัดสินใจอะไร, save/log อะไร, ใช้ command ไหนพิสูจน์.
+2. **ทำใน `sandbox/` เท่านั้น** — ของทดลองอยู่ sandbox จนกว่า demo/test/check จะผ่าน.
+3. **แยก boundary เบาๆ** — logic อยู่ `domain/`, ช่องคุยกับโลกภายนอกอยู่ `ports/`, ของจริง/ไฟล์/API อยู่ `adapters/`.
+4. **จบด้วยประตูเดียว** — รัน `cd sandbox && python tools/check.py`.
+
+เรื่อง `SafetyGate`, `graphify`, `DEFERRED.md`, และ two-tier DoD ค่อยหยิบมาใช้
+เมื่อมี external write, หลาย organ, งานเลื่อน, หรือจะบอกว่าเสร็จจริง.
+
 ใช้กับ Claude Code: เปิด repo นี้แล้ว `CLAUDE.md` จะบอกกฎ project ให้ Claude โหลดอัตโนมัติ.
 ใช้กับ agent อื่น: อ่าน `AGENTS.md` ก่อน แล้วตาม pointer ไปที่ `RULES.md`.
 ถ้าอยากได้คำสั่งก็อปวางสำหรับมือใหม่ ดู `PROMPTS.md`.

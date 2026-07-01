@@ -61,6 +61,21 @@ slice with a testable success criterion.
 - **Capability reality check** before phase/release/promote/done claims: prove
   the runtime artifact chain before adding more process.
 
+## Day-1 path for beginners
+Do not start by teaching every rule. On the first pass, guide the user through
+only the smallest useful path:
+
+1. Pick one first slice: user action, input, domain decision, saved/logged
+   output, and proof command.
+2. Keep all new/prototype work in `sandbox/`.
+3. Use the boundary lightly: real decision in `domain/`, interfaces in `ports/`,
+   real files/APIs in `adapters/`.
+4. End with one proof gate: `cd sandbox && python tools/check.py`.
+
+Introduce `SafetyGate`, `graphify`, `DEFERRED.md`, two-tier DoD, and Capability
+Reality Check only when their trigger appears: external write, multiple organs,
+deferred work, promotion, release, phase, or a "done" claim.
+
 ## Agent handoff state
 Use `tools/token_compressor.py` after a slice has run and before passing context
 to another agent. Compress a copy of the state or event digest only. Never
@@ -96,19 +111,21 @@ python tools/check.py                             # full proof gate
 2. Ask only for missing critical facts. If a `reference/RULES.md` §10 decision
    point appears, offer four options, mark one recommended path, and explain the
    tradeoff.
-3. Define the first slice before scaffolding:
+3. Use the Day-1 path above for beginners; do not explain every framework rule
+   before the first slice exists.
+4. Define the first slice before scaffolding:
    - user-visible action,
    - input,
    - domain decision,
    - persisted/logged output,
    - success criteria as a test/demo command.
-4. Create the smallest organ that proves that slice. Do not add a "brain",
+5. Create the smallest organ that proves that slice. Do not add a "brain",
    database, queue, dashboard, or optimization until the slice passes.
-5. Run the demo and `python tools/check.py`. If anything fails, keep looping on
+6. Run the demo and `python tools/check.py`. If anything fails, keep looping on
    that success criterion before widening scope.
-6. If the work mentions phase, release, promote, production, or done, run the
+7. If the work mentions phase, release, promote, production, or done, run the
    Capability Reality Check in `reference/RULES.md` §9 before making the claim.
-7. Review the final diff against the confirmed brief before reporting success.
+8. Review the final diff against the confirmed brief before reporting success.
    If anything is incomplete or out of scope, fix it or report the blocker.
 
 ## Manifest contract
@@ -116,8 +133,8 @@ Read `reference/MANIFEST.md` before hand-editing any `manifest.json`.
 `graphify.py` uses `depends_on`, `owns_data`, `external_writes`, and
 `safety_gate` for shadow detection, and reports `phase` as the organ's
 skeleton-first progress marker. Keep each organ's `CHECKLIST.md` and
-   `manifest.json` phase in sync. Run `python tools/check.py` so
-schema/checklist drift and declared external-write drift fail before catalog generation.
+`manifest.json` phase in sync. Run `python tools/check.py` so schema/checklist
+drift and declared external-write drift fail before catalog generation.
 
 ## What I (Claude) should do when asked to add an organ
 1. Confirm the organ name + one-line purpose (ask if unclear — one question at a time).
